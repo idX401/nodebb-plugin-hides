@@ -1,10 +1,12 @@
 # NodeBB Hide Links To Guests
 
-This NodeBB plugin will allow you to hide links to guests.
+This NodeBB plugin
 
 ## Todo
 
 - Add more languages
+
+## Planned
 - Add admin config
 - Hide other content, like images and videos
 
@@ -12,4 +14,6 @@ This NodeBB plugin will allow you to hide links to guests.
 
 Either through the NodeBB ACP or:
 
-    npm i nodebb-plugin-hide-links-to-guests
+    npm i git+https://idX401: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@github.com/idX401/nodebb-plugin-hides.git
+    
+    
