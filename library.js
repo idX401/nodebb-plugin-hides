@@ -1,8 +1,9 @@
 "use strict";
-
 var plugin = {};
 
-plugin.alterContent = function (params, callback) {
+const user = require.main.require('./src/user');
+
+plugin.alterContent = async function (params, callback) {
 	//console.log(params);
 	if (!params.caller.uid) {
 		for (const post of params.posts) {
@@ -12,8 +13,15 @@ plugin.alterContent = function (params, callback) {
 				'<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>'
 			);
 		}
+	}else{
+		let userData = getUser(params.caller.uid);
+		console.log(params,userData);
 	}
   callback(null, params);
+};
+
+plugin.getUser = async function (uid) => {
+	return await user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
 };
 
 module.exports = plugin;
