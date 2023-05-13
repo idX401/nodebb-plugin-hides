@@ -20,8 +20,10 @@ plugin.alterContent = async function (params, callback) {
   callback(null, params);
 };
 
-plugin.getUser = async function (uid) => {
-	return await user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
+plugin.getUser = async (uid) => {
+	let userData = user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
+	console.log('user',userData);
+	return userData;
 };
 
 module.exports = plugin;
