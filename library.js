@@ -4,6 +4,7 @@ var plugin = {};
 const user = require.main.require('./src/user');
 
 plugin.alterContent = async function (params, callback) {
+	
 	//console.log(params);
 	if (!params.caller.uid) {
 		for (const post of params.posts) {
@@ -17,7 +18,7 @@ plugin.alterContent = async function (params, callback) {
 		let userData = await plugin.getUser(params.caller.uid);
 		console.log(params,'-',userData);
 	}
-  await callback(null, params);
+	callback(null, params);
 };
 
 plugin.getUser = async (uid) => {
