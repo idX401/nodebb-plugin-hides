@@ -3,7 +3,7 @@ var plugin = {};
 
 const user = require.main.require('./src/user');
 
-plugin.alterContent = async function (params, callback) {
+plugin.alterContent = function (params, callback) {
 	
 	//console.log(params);
 	if (!params.caller.uid) {
@@ -15,13 +15,13 @@ plugin.alterContent = async function (params, callback) {
 			);
 		}
 	}else{
-		let userData = await plugin.getUser(params.caller.uid);
+		let userData = plugin.getUser(params.caller.uid);
 		console.log(params,'-',userData);
 	}
 	callback(null, params);
 };
 
-plugin.getUser = async (uid) => {
+plugin.getUser = function (uid) {
 	let userData = user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
 	console.log('user',userData);
 	return userData;
