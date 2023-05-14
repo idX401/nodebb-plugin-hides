@@ -1,29 +1,28 @@
 "use strict";
-var plugin = {};
+const plugin = {};
 
 const user = require.main.require('./src/user');
 
-plugin.alterContent = function (params, callback) {
+const linkHrefRegex = /<a[^>]*>[^<]*<\/a>/g;
+
+plugin.alterContent = async function (params, callback) {
 	//console.log(params);
 	if (!params.caller.uid) {
 		for (const post of params.posts) {
-			const regexHrefTag = new RegExp("<a[^>]*>[^<]*</a>", "g");
 			post.content = post.content.replace(
-				regexHrefTag,
+				linkHrefRegex,
 				'<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>'
 			);
 		}
 	}else{
-		let userData = plugin.getUser(params.caller.uid);
-		console.log(params,'-1-',userData);
+		let userData = await plugin.getUser(params.caller.uid);
+		console.log(params,'-2-',userData);
 	}
-	callback(null, params);
+	await callback(null, params);
 };
 
-plugin.getUser = function (uid) {
-	let userData = user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
-	console.log('user',userData);
-	return userData;
+plugin.getUser = async function (uid) {
+	return await user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
 };
 
 module.exports = plugin;
