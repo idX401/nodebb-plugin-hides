@@ -18,7 +18,7 @@ plugin.alterContent = async function (params, callback) {
 		let userData = await plugin.getUser(params.caller.uid);
 		console.log(params,'-2-',userData);
 	}
-	await callback(null, params);
+	return callback(null, params);
 };
 
 plugin.getUser = async function (uid) {
