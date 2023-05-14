@@ -4,7 +4,6 @@ var plugin = {};
 const user = require.main.require('./src/user');
 
 plugin.alterContent = function (params, callback) {
-	
 	//console.log(params);
 	if (!params.caller.uid) {
 		for (const post of params.posts) {
@@ -16,7 +15,7 @@ plugin.alterContent = function (params, callback) {
 		}
 	}else{
 		let userData = plugin.getUser(params.caller.uid);
-		console.log(params,'-',userData);
+		console.log(params,'-1-',userData);
 	}
 	callback(null, params);
 };
