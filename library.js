@@ -5,7 +5,7 @@ const user = require.main.require('./src/user');
 
 const linkHrefRegex = /<a[^>]*>[^<]*<\/a>/g;
 
-plugin.alterContent = async function (params, callback) {
+plugin.alterContent = async function (params) {
 	//console.log(params);
 	if (!params.caller.uid) {
 		for (const post of params.posts) {
@@ -16,9 +16,9 @@ plugin.alterContent = async function (params, callback) {
 		}
 	}else{
 		let userData = await plugin.getUser(params.caller.uid);
-		console.log(params,'-2-',userData);
+		console.log(params,'-3-',userData);
 	}
-	return callback(null, params);
+	return params;
 };
 
 plugin.getUser = async function (uid) {
