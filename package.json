@@ -20,5 +20,8 @@
     "email": "idX401@forum.l33t.ltd"
   },
   "license": "MIT",
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "nbbpm": {
+    "compatibility": "^3.0.0"
+  }
 }
