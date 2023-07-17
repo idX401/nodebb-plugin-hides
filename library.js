@@ -4,12 +4,32 @@ const plugin = {};
 const user = require.main.require('./src/user');
 
 //regex
-const boltRegex = /\[b\](.+?)\[\/b\]/gi
-const italicRegex = /\[i\](.+?)\[\/i\]/gi
-const underlineRegex = /\[u\](.+?)\[\/u\]/gi
-const crossedOutRegex = /\[s\](.+?)\[\/s\]/gi
-
+const boltRegex = /\[b\](.+?)\[\/b\]/gi;
+const italicRegex = /\[i\](.+?)\[\/i\]/gi;
+const underlineRegex = /\[u\](.+?)\[\/u\]/gi;
+const crossedOutRegex = /\[s\](.+?)\[\/s\]/gi;
+const colorRegex = /\[color=(.+?)\](.+?)\[\/color\]/gi;
+const fontRegex = /\[font=(.+?)\](.+?)\[\/font\]/gi;
+const sizeRegex = /\[size=(.+?)\](.+?)\[\/size\]/gi;
+const urlRegex = /\[url\](.+?)\[\/url\]/gi;
+const emailRegex = /\[email\](.+?)\[\/email\]/gi;
+const urlCustomRegex = /\[url=(.+?)\](.+?)\[\/url\]/gi;
+const emailCustomRegex = /\[email=(.+?)\](.+?)\[\/email\]/gi;
+const imgRegex = /\[img\](.+?)\[\/img\]/gi;
+const mediaRegex = /\[media=(.+?)\](.+?)\[\/media\]/gi;
+const leftRegex = /\[left\](.+?)\[\/left\]/gi;
+const centerRegex = /\[center\](.+?)\[\/center\]/gi;
+const rightRegex = /\[right\](.+?)\[\/right\]/gi;
 const spoilerRegex = /\[spoiler\]\s?(.+?)\s?\[\/spoiler\]/gi;
+const spoilerCustomRegex = /\[spoiler="(.+?)"\]\s?(.+?)\s?\[\/spoiler\]/gi;
+const visitorRegex = /\[visitor\]\[\/visitor\]/gi;
+
+const clubRegex =  /\[club\](.+?)\[\/club\]/gi;
+const daysRegex = /\[days=(.+?)\](.+?)\[\/days\]/gi;
+const likesRegex = /\[likes=(.+?)\](.+?)\[\/likes\]/gi;
+const useridsRegex = /\[userids=(.+?)\](.+?)\[\/userids\]/gi;
+const exceptidsRegex = /\[exceptids=(.+?)\](.+?)\[\/exceptids\]/gi;
+
 //<a href
 const linkHrefRegex = /<a[^>]*>[^<]*<\/a>/g;
 
