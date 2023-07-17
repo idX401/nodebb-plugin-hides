@@ -33,8 +33,18 @@ plugin.getUser = async function (uid) {
 plugin.parseContent = async function (params) {
 	//console.log(params)
 	//bolt [b][/b]
-	for (const post of params.posts) {
-		post.content = post.content.replace(
+	if ('string' === typeof params) {
+		params = params.replace(
+			boltRegex,
+			"<strong>$1</strong>"
+		);
+	} else if (params.postData && data.postData.content != null && data.postData.content != undefined) {
+		params.postData.content = params.postData.content.replace(
+			boltRegex,
+			"<strong>$1</strong>"
+		);
+	} else if (params.userData && data.userData.signature != null && data.userData.signature != undefined) {
+		params.userData.signature = params.userData.signature.replace(
 			boltRegex,
 			"<strong>$1</strong>"
 		);
