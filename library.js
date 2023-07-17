@@ -29,28 +29,28 @@ plugin.alterContent = async function (params) {
 plugin.getUser = async function (uid) {
 	return await user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
 };
+plugin.parseContent = function(data, callback) {
+    var Transform = async function (content) {
+      return content.replace(boltRegex, "<strong>$1</strong>");
+    };
 
-plugin.parseContent = async function (params) {
-	//console.log(params)
-	//bolt [b][/b]
-	if ('string' === typeof params) {
-		params = params.replace(
-			boltRegex,
-			"<strong>$1</strong>"
-		);
-	} else if (params.postData && data.postData.content != null && data.postData.content != undefined) {
-		params.postData.content = params.postData.content.replace(
-			boltRegex,
-			"<strong>$1</strong>"
-		);
-	} else if (params.userData && data.userData.signature != null && data.userData.signature != undefined) {
-		params.userData.signature = params.userData.signature.replace(
-			boltRegex,
-			"<strong>$1</strong>"
-		);
-	}
-	return params;
-};
+    if ('string' === typeof data) {
+      Transform(data).then((parsedContent) => {
+	data = parsedContent;
+	callback(null, data);
+      });
+    } else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
+      Transform(data.postData.content).then((parsedContent) => {
+	data.postData.content = parsedContent;
+	callback(null, data);
+      });
+    } else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
+      Transform(data.userData.signature).then((parsedContent) => {
+	data.userData.signature = parsedContent;
+	callback(null, data);
+      });
+    }
+}
 /*
 plugin.parseContent = function(data, callback) {
     var Transform = async function (content) {
