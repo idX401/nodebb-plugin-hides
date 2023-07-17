@@ -6,7 +6,8 @@
   "library": "./library.js",
   "languages": "languages",
   "defaultLang": "ru",
-  "hooks": []
+  "less": ["./static/spoilers.less"],
+  "staticDirs": {"static": "./static"},
   "hooks": [
       { "hook": "filter:post.getPosts", "method": "alterContent" },
 	    { "hook": "filter:parse.post", "method": "parseContent" },
