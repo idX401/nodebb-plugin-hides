@@ -2,8 +2,14 @@
 const plugin = {};
 
 const user = require.main.require('./src/user');
-//bolt [b][/b]
+
+//regex
 const boltRegex = /\[b\](.+?)\[\/b\]/gi
+const italicRegex = /\[i\](.+?)\[\/i\]/gi
+const underlineRegex = /\[u\](.+?)\[\/u\]/gi
+const crossedOutRegex = /\[s\](.+?)\[\/s\]/gi
+
+const spoilerRegex = /\[spoiler\]\s?(.+?)\s?\[\/spoiler\]/gi;
 //<a href
 const linkHrefRegex = /<a[^>]*>[^<]*<\/a>/g;
 
