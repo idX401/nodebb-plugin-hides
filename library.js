@@ -3,14 +3,14 @@ const plugin = {};
 
 const user = require.main.require('./src/user');
 //bolt [b][/b]
-let boltRegex = /\[b\](.+?)\[\/b\]/gi
+const boltRegex = /\[b\](.+?)\[\/b\]/gi
 //<a href
 const linkHrefRegex = /<a[^>]*>[^<]*<\/a>/g;
 
 plugin.alterContent = async function (params) {
 	//console.log(params);
 	//bolt [b][/b]
-	post.content = post.content.replace(boltRegex, "<strong>$1</strong>");
+	//post.content = post.content.replace(boltRegex, "<strong>$1</strong>");
 	//hide links for guest
 	if (!params.caller.uid) {
 		for (const post of params.posts) {
