@@ -1,0 +1,31 @@
+.spoiler {
+	border: 1px solid #CCC;
+	border-radius: 3px;
+	/*background: #EFEFEF;*/
+	padding: 10px;
+	border-top-left-radius: 0;
+	transition-property: height;
+	transition-duration: 1s;
+	transition-timing-function: linear;
+	transition-delay: 1s;
+}
+.spoiler > br:last-child, .spoiler > br:first-child{
+	display: none;
+}
+
+.spoiler-switcher.hiding ~ .spoiler {
+	height: 0;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+.spoiler-switcher.showing {
+	border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: -1px;
+}
+.spoiler-switcher > *:first-child {
+	margin-right: 3px;
+}
