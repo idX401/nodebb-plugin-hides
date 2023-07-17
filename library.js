@@ -30,7 +30,7 @@ plugin.getUser = async function (uid) {
 	return await user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
 };
 
-plugin.parseContent = async  function(data, callback) {
+plugin.parseContent = function(data, callback) {
     var Transform = async function (content) {
       return content.replace(/\[SPOILER\]/g, '<div><div href="#" class="show-spoiler btn btn-md btn-default waves-effect" title="Сlick to show or hide"><i class="fa fa-eye-slash fa-fw"></i><span class="btn-text" data-show_text="spoiler" data-hide_text="spoiler">spoiler</span></div><div class="spoiler hidden">')
 	    .replace(/\[SPOILER=([^<]*)\]/g, '<div><div href="#" class="show-spoiler btn btn-md btn-default waves-effect" title="Сlick to show or hide"><i class="fa fa-eye-slash fa-fw"></i><span class="btn-text" data-show_text="$1" data-hide_text="$1">$1</span></div><div class="spoiler hidden">')
