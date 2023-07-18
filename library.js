@@ -4,31 +4,31 @@ const plugin = {};
 const user = require.main.require('./src/user');
 
 //regex
-const boltRegex = /\[b\](.+?)\[\/b\]/gi;
-const italicRegex = /\[i\](.+?)\[\/i\]/gi;
-const underlineRegex = /\[u\](.+?)\[\/u\]/gi;
-const crossedOutRegex = /\[s\](.+?)\[\/s\]/gi;
-const colorRegex = /\[color=(.+?)\](.+?)\[\/color\]/gi;
-const fontRegex = /\[font=(.+?)\](.+?)\[\/font\]/gi;
-const sizeRegex = /\[size=(.+?)\](.+?)\[\/size\]/gi;
+const boltRegex = /\[b\]([\s\S]*?)\[\/b\]/gi;
+const italicRegex = /\[i\]([\s\S]*?)\[\/i\]/gi;
+const underlineRegex = /\[u\]([\s\S]*?)\[\/u\]/gi;
+const crossedOutRegex = /\[s\]([\s\S]*?)\[\/s\]/gi;
+const colorRegex = /\[color=(.+?)\]([\s\S]*?)\[\/color\]/gi;
+const fontRegex = /\[font=(.+?)\]([\s\S]*?)\[\/font\]/gi;
+const sizeRegex = /\[size=(.+?)\]([\s\S]*?)\[\/size\]/gi;
 const urlRegex = /\[url\](.+?)\[\/url\]/gi;
 const emailRegex = /\[email\](.+?)\[\/email\]/gi;
-const urlCustomRegex = /\[url=(.+?)\](.+?)\[\/url\]/gi;
-const emailCustomRegex = /\[email=(.+?)\](.+?)\[\/email\]/gi;
+const urlCustomRegex = /\[url=(.+?)\]([\s\S]*?)\[\/url\]/gi;
+const emailCustomRegex = /\[email=(.+?)\]([\s\S]*?)\[\/email\]/gi;
 const imgRegex = /\[img\](.+?)\[\/img\]/gi;
 const mediaRegex = /\[media=(.+?)\](.+?)\[\/media\]/gi;
-const leftRegex = /\[left\](.+?)\[\/left\]/gi;
-const centerRegex = /\[center\](.+?)\[\/center\]/gi;
-const rightRegex = /\[right\](.+?)\[\/right\]/gi;
-const spoilerRegex = /\[spoiler\]\s?(.+?)\s?\[\/spoiler\]/gi;
-const spoilerCustomRegex = /\[spoiler="(.+?)"\]\s?(.+?)\s?\[\/spoiler\]/gi;
-const visitorRegex = /\[visitor\]\[\/visitor\]/gi;
+const leftRegex = /\[left\]([\s\S]*?)\[\/left\]/gi;
+const centerRegex = /\[center\]([\s\S]*?)\[\/center\]/gi;
+const rightRegex = /\[right\]([\s\S]*?)\[\/right\]/gi;
+const spoilerRegex = /\[spoiler\]([\s\S]*?)\[\/spoiler\]/gi;
+const spoilerCustomRegex = /\[spoiler=(.+?)\]([\s\S]*?)\[\/spoiler\]/gi;
+const visitorRegex = /\[visitor\]([\s\S]*?)\[\/visitor\]/gi;
 
-const clubRegex =  /\[club\](.+?)\[\/club\]/gi;
-const daysRegex = /\[days=(.+?)\](.+?)\[\/days\]/gi;
-const likesRegex = /\[likes=(.+?)\](.+?)\[\/likes\]/gi;
-const useridsRegex = /\[userids=(.+?)\](.+?)\[\/userids\]/gi;
-const exceptidsRegex = /\[exceptids=(.+?)\](.+?)\[\/exceptids\]/gi;
+const clubRegex =  /\[club\]([\s\S]*?)\[\/club\]/gi;
+const daysRegex = /\[days=(.+?)\]([\s\S]*?)\[\/days\]/gi;
+const likesRegex = /\[likes=(.+?)\]([\s\S]*?)\[\/likes\]/gi;
+const useridsRegex = /\[userids=(.+?)\]([\s\S]*?)\[\/userids\]/gi;
+const exceptidsRegex = /\[exceptids=(.+?)\]([\s\S]*?)\[\/exceptids\]/gi;
 
 //<a href
 const linkHrefRegex = /<a[^>]*>[^<]*<\/a>/g;
