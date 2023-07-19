@@ -17,11 +17,15 @@ const urlCustomRegex = /\[url=(.+?)\]([\s\S]*?)\[\/url\]/gi;
 const emailCustomRegex = /\[email=(.+?)\]([\s\S]*?)\[\/email\]/gi;
 const imgRegex = /\[img\](.+?)\[\/img\]/gi;
 const mediaRegex = /\[media=(.+?)\](.+?)\[\/media\]/gi;
+//LIST
 const leftRegex = /\[left\]([\s\S]*?)\[\/left\]/gi;
 const centerRegex = /\[center\]([\s\S]*?)\[\/center\]/gi;
 const rightRegex = /\[right\]([\s\S]*?)\[\/right\]/gi;
+//QUOTE
 const spoilerRegex = /\[spoiler\]([\s\S]*?)\[\/spoiler\]/gi;
 const spoilerCustomRegex = /\[spoiler=(.+?)\]([\s\S]*?)\[\/spoiler\]/gi;
+//CODE
+//INDENT
 const visitorRegex = /\[visitor\]([\s\S]*?)\[\/visitor\]/gi;
 
 const clubRegex =  /\[club\]([\s\S]*?)\[\/club\]/gi;
