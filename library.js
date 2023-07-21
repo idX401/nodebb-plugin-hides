@@ -171,6 +171,13 @@ plugin.parseContent = function(data, callback) {
 	    }
 	    return text;
 	}
+	//quote
+	function parseSpoiler(text) {
+	    while(text.search(spoilerRegex) !== -1) {
+	        text = text.replace(spoilerRegex, '<div href="#" class="show-spoiler btn btn-md btn-default waves-effect" title="Сlick to show or hide"><i class="fa fa-eye-slash fa-fw"></i><span class="btn-text" data-show_text="spoiler" data-hide_text="spoiler">spoiler</span></div><div class="spoiler hidden">$1</div>');
+	    }
+	    return text;
+	}
 	if ('string' === typeof data) {
 		//data = parseBR(data);
 		data = parseBolt(data);
@@ -190,6 +197,8 @@ plugin.parseContent = function(data, callback) {
 		data = parseLeft(data);
 		data = parseCenter(data);
 		data = parseRight(data);
+		//quote
+		data = parseSpoiler(data);
 	} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
 		//data.postData.content = parseBR(data.postData.content);
 		data.postData.content = parseBolt(data.postData.content);
@@ -209,6 +218,8 @@ plugin.parseContent = function(data, callback) {
 		data.postData.content = parseLeft(data.postData.content);
 		data.postData.content = parseCenter(data.postData.content);
 		data.postData.content = parseRight(data.postData.content);
+		//quote
+		data.postData.content = parseSpoiler(data.postData.content);
 	} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
 		//data.userData.signature = parseBR(data.userData.signature);
 		data.userData.signature = parseBolt(data.userData.signature);
@@ -228,6 +239,8 @@ plugin.parseContent = function(data, callback) {
 		data.userData.signature = parseLeft(data.userData.signature);
 		data.userData.signature = parseCenter(data.userData.signature);
 		data.userData.signature = parseRight(data.userData.signature);
+		//quote
+		data.userData.signature = parseSpoiler(data.userData.signature);
 	}
 	callback(null, data);
 };
