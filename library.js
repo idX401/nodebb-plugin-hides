@@ -185,7 +185,7 @@ plugin.parseContent = function(data, callback) {
 	}
 	function parseSpoilerCustom(text) {
 	    while(text.search(spoilerCustomRegex) !== -1) {
-	        text = text.replace(spoilerCustomRegex, '<div><div href="#" class="show-spoiler btn btn-md btn-default waves-effect" title="Сlick to show or hide"><i class="fa fa-eye-slash fa-fw"></i><span class="btn-text" data-show_text="spoiler" data-hide_text="spoiler">$1</span></div><div class="spoiler hidden">$2</div></div>');
+	        text = text.replace(spoilerCustomRegex, '<div><div href="#" class="show-spoiler btn btn-md btn-default waves-effect" title="Сlick to show or hide"><i class="fa fa-eye-slash fa-fw"></i><span class="btn-text" data-show_text="$1" data-hide_text="$1">$1</span></div><div class="spoiler hidden">$2</div></div>');
 	    }
 	    return text;
 	}
