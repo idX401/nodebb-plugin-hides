@@ -115,24 +115,44 @@ plugin.parseContent = function(data, callback) {
 	    }
 	    return text;
 	}
+	function parseUrl(text) {
+	    while(text.search(urlRegex) !== -1) {
+	        text = text.replace(urlRegex, '<a href="$1" target="_blank" class="externalLink" rel="nofollow">$1</a>');
+	    }
+	    return text;
+	}
+	function parseEmail(text) {
+	    while(text.search(emailRegex) !== -1) {
+	        text = text.replace(emailRegex, '<a href="mailto:$1">$1</a>');
+	    }
+	    return text;
+	}
+	//urlCustom
+	//emailCustom
 	if ('string' === typeof data) {
 		data = parseBolt(data);
 		data = parseItalic(data);
 		data = parseUnderline(data);
 		data = parseCrossedOut(data);
 		data = parseSize(data);
+		data = parseUrl(data);
+		data = parseEmail(data);
 	} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
 		data.postData.content = parseBolt(data.postData.content);
 		data.postData.content = parseItalic(data.postData.content);
 		data.postData.content = parseUnderline(data.postData.content);
 		data.postData.content = parseCrossedOut(data.postData.content);
 		data.postData.content = parseSize(data.postData.content);
+		data.postData.content = parseUrl(data.postData.content);
+		data.postData.content = parseEmail(data.postData.content);
 	} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
 		data.userData.signature = parseBolt(data.userData.signature);
 		data.userData.signature = parseItalic(data.userData.signature);
 		data.userData.signature = parseUnderline(data.userData.signature);
 		data.userData.signature = parseCrossedOut(data.userData.signature);
 		data.userData.signature = parseSize(data.userData.signature);
+		data.userData.signature = parseUrl(data.userData.signature);
+		data.userData.signature = parseEmail(data.userData.signature);
 	}
 	callback(null, data);
 };
