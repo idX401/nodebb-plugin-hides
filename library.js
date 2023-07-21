@@ -137,7 +137,7 @@ plugin.parseContent = function(data, callback) {
 	}
 	function parseMedia(text) {
 	    while(text.search(mediaRegex) !== -1) {
-	        text = text.replace(mediaRegex, '<media href="$1" target="_blank" class="externalLink" rel="nofollow">$1</media>');
+	        text = text.replace(mediaRegex, '<a media="$1" target="_blank" class="externalLink" rel="nofollow">$1</a>');
 	    }
 	    return text;
 	}
