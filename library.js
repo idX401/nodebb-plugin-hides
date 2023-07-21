@@ -174,13 +174,13 @@ plugin.parseContent = function(data, callback) {
 	//quote
 	function parseSpoiler(text) {
 	    while(text.search(spoilerRegex) !== -1) {
-	        text = text.replace(spoilerRegex, '<div href="#" class="show-spoiler btn btn-md btn-default waves-effect" title="Сlick to show or hide"><i class="fa fa-eye-slash fa-fw"></i><span class="btn-text" data-show_text="spoiler" data-hide_text="spoiler">spoiler</span></div><div class="spoiler hidden">$1</div>');
+	        text = text.replace(spoilerRegex, '<div><div href="#" class="show-spoiler btn btn-md btn-default waves-effect" title="Сlick to show or hide"><i class="fa fa-eye-slash fa-fw"></i><span class="btn-text" data-show_text="spoiler" data-hide_text="spoiler">spoiler</span></div><div class="spoiler hidden">$1</div></div>');
 	    }
 	    return text;
 	}
 	function parseSpoilerCustom(text) {
 	    while(text.search(spoilerCustomRegex) !== -1) {
-	        text = text.replace(spoilerCustomRegex, '<div href="#" class="show-spoiler btn btn-md btn-default waves-effect" title="Сlick to show or hide"><i class="fa fa-eye-slash fa-fw"></i><span class="btn-text" data-show_text="spoiler" data-hide_text="spoiler">$1</span></div><div class="spoiler hidden">$2</div>');
+	        text = text.replace(spoilerCustomRegex, '<div><div href="#" class="show-spoiler btn btn-md btn-default waves-effect" title="Сlick to show or hide"><i class="fa fa-eye-slash fa-fw"></i><span class="btn-text" data-show_text="spoiler" data-hide_text="spoiler">$1</span></div><div class="spoiler hidden">$2</div></div>');
 	    }
 	    return text;
 	}
