@@ -35,7 +35,6 @@ const useridsRegex = /\[userids=(.+?)\]([\s\S]*?)\[\/userids\]/gi;
 const exceptidsRegex = /\[exceptids=(.+?)\]([\s\S]*?)\[\/exceptids\]/gi;
 
 */
-const brRegex /\n/g
 const boltRegex = /\[b\]([^[]*(?:\[(?!b\]|\/b\])[^[]*)*)\[\/b\]/gi;
 const italicRegex = /\[i\]([^[]*(?:\[(?!i\]|\/i\])[^[]*)*)\[\/i\]/gi;
 const underlineRegex = /\[u\]([^[]*(?:\[(?!u\]|\/u\])[^[]*)*)\[\/u\]/gi;
@@ -86,12 +85,6 @@ plugin.getUser = async function (uid) {
 	return await user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
 };
 plugin.parseContent = function(data, callback) {
-	function parseBR(text) {
-	    while(text.search(brRegex) !== -1) {
-	        text = text.replace(brRegex, '<br>');
-	    }
-	    return text;
-	}
 	function parseBolt(text) {
 	    while(text.search(boltRegex) !== -1) {
 	        text = text.replace(boltRegex, '<b>$1</b>');
@@ -149,8 +142,6 @@ plugin.parseContent = function(data, callback) {
 	    return text;
 	}
 	if ('string' === typeof data) {
-		//data = '<p dir="auto">'+data+'</p>';
-		//data = parseBR(data);
 		data = parseBolt(data);
 		data = parseItalic(data);
 		data = parseUnderline(data);
@@ -161,8 +152,6 @@ plugin.parseContent = function(data, callback) {
 		data = parseImg(data);
 		data = parseMedia(data);
 	} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
-		//data.postData.content = '<p dir="auto">'+data.postData.conten+'</p>';
-		//data.postData.content = parseBR(data.postData.content);
 		data.postData.content = parseBolt(data.postData.content);
 		data.postData.content = parseItalic(data.postData.content);
 		data.postData.content = parseUnderline(data.postData.content);
@@ -173,8 +162,6 @@ plugin.parseContent = function(data, callback) {
 		data.postData.content = parseImg(data.postData.content);
 		data.postData.content = parseMedia(data.postData.content);
 	} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
-		//data.userData.signature = '<p dir="auto">'+data.userData.signature+'</p>';
-		//data.userData.signature = parseBR(data.userData.signature);
 		data.userData.signature = parseBolt(data.userData.signature);
 		data.userData.signature = parseItalic(data.userData.signature);
 		data.userData.signature = parseUnderline(data.userData.signature);
