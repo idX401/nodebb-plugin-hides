@@ -120,7 +120,7 @@ plugin.parseContent = function(data, callback) {
 	}
 	function parseColor(text) {
 	    while(text.search(colorRegex) !== -1) {
-	        text = text.replace(colorRegex, '<<span style="color: $1">$2</span>');
+	        text = text.replace(colorRegex, '<span style="color: $1">$2</span>');
 	    }
 	    return text;
 	}
