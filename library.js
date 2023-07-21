@@ -118,6 +118,8 @@ plugin.parseContent = function(data, callback) {
 	    }
 	    return text;
 	}
+	//color
+	//font
 	function parseSize(text) {
 	    while(text.search(sizeRegex) !== -1) {
 	        text = text.replace(sizeRegex, '<span style="font-size: $1pt">$2</span>');
@@ -150,39 +152,82 @@ plugin.parseContent = function(data, callback) {
 	    }
 	    return text;
 	}
+	//list
+	function parseLeft(text) {
+	    while(text.search(leftRegex) !== -1) {
+	        text = text.replace(leftRegex, '<div style="text-align: left">$1</div>');
+	    }
+	    return text;
+	}
+	function parseCenter(text) {
+	    while(text.search(centerRegex) !== -1) {
+	        text = text.replace(centerRegex, '<div style="text-align: center">$1​</div>');
+	    }
+	    return text;
+	}
+	function parseRight(text) {
+	    while(text.search(rightRegex) !== -1) {
+	        text = text.replace(rightRegex, '<div style="text-align: right">$1</div>');
+	    }
+	    return text;
+	}
 	if ('string' === typeof data) {
-		data = parseBR(data);
+		//data = parseBR(data);
 		data = parseBolt(data);
 		data = parseItalic(data);
 		data = parseUnderline(data);
 		data = parseCrossedOut(data);
+		//urlCustom
+		//emailCustom
 		data = parseSize(data);
 		data = parseUrl(data);
 		data = parseEmail(data);
+		//urlCustom
+		//emailCustom
 		data = parseImg(data);
 		data = parseMedia(data);
+		//list
+		data = parseLeft(data);
+		data = parseCenter(data);
+		data = parseRight(data);
 	} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
-		data.postData.content = parseBR(data.postData.content);
+		//data.postData.content = parseBR(data.postData.content);
 		data.postData.content = parseBolt(data.postData.content);
 		data.postData.content = parseItalic(data.postData.content);
 		data.postData.content = parseUnderline(data.postData.content);
 		data.postData.content = parseCrossedOut(data.postData.content);
+		//urlCustom
+		//emailCustom
 		data.postData.content = parseSize(data.postData.content);
 		data.postData.content = parseUrl(data.postData.content);
 		data.postData.content = parseEmail(data.postData.content);
+		//urlCustom
+		//emailCustom
 		data.postData.content = parseImg(data.postData.content);
 		data.postData.content = parseMedia(data.postData.content);
+		//list
+		data.postData.content = parseLeft(data.postData.content);
+		data.postData.content = parseCenter(data.postData.content);
+		data.postData.content = parseRight(data.postData.content);
 	} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
-		data.userData.signature = parseBR(data.userData.signature);
+		//data.userData.signature = parseBR(data.userData.signature);
 		data.userData.signature = parseBolt(data.userData.signature);
 		data.userData.signature = parseItalic(data.userData.signature);
 		data.userData.signature = parseUnderline(data.userData.signature);
 		data.userData.signature = parseCrossedOut(data.userData.signature);
+		//urlCustom
+		//emailCustom
 		data.userData.signature = parseSize(data.userData.signature);
 		data.userData.signature = parseUrl(data.userData.signature);
 		data.userData.signature = parseEmail(data.userData.signature);
+		//urlCustom
+		//emailCustom
 		data.userData.signature = parseImg(data.userData.signature);
 		data.userData.signature = parseMedia(data.userData.signature);
+		//list
+		data.userData.signature = parseLeft(data.userData.signature);
+		data.userData.signature = parseCenter(data.userData.signature);
+		data.userData.signature = parseRight(data.userData.signature);
 	}
 	callback(null, data);
 };
