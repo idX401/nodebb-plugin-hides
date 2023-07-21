@@ -54,7 +54,7 @@ const centerRegex = /\[center\]([^[]*(?:\[(?!center\]|\/center\])[^[]*)*)\[\/cen
 const rightRegex =/\[right\]([^[]*(?:\[(?!right\]|\/right\])[^[]*)*)\[\/right\]/gi;
 //quote
 const spoilerRegex = /\[spoiler\]([^[]*(?:\[(?!spoiler\]|\/spoiler\])[^[]*)*)\[\/spoiler\]/gi;
-//spoilerCustom
+const spoilerCustomRegex = /\[spoiler=(.+)\]([^[]*(?:\[(?!spoiler=.+\]|\/spoiler\])[^[]*)*)\[\/spoiler\]/gi;
 //code
 //indent
 const visitorRegex = /\[visitor\]([^[]*(?:\[(?!visitor\]|\/visitor\])[^[]*)*)\[\/visitor\]/gi;
@@ -178,6 +178,12 @@ plugin.parseContent = function(data, callback) {
 	    }
 	    return text;
 	}
+	function parseSpoilerCustom(text) {
+	    while(text.search(spoilerCustomRegex) !== -1) {
+	        text = text.replace(spoilerCustomRegex, '<div href="#" class="show-spoiler btn btn-md btn-default waves-effect" title="Сlick to show or hide"><i class="fa fa-eye-slash fa-fw"></i><span class="btn-text" data-show_text="spoiler" data-hide_text="spoiler">$1</span></div><div class="spoiler hidden">$2</div>');
+	    }
+	    return text;
+	}
 	if ('string' === typeof data) {
 		//data = parseBR(data);
 		data = parseBolt(data);
@@ -199,6 +205,7 @@ plugin.parseContent = function(data, callback) {
 		data = parseRight(data);
 		//quote
 		data = parseSpoiler(data);
+		data = parseSpoilerCustom(data);
 	} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
 		//data.postData.content = parseBR(data.postData.content);
 		data.postData.content = parseBolt(data.postData.content);
@@ -220,6 +227,7 @@ plugin.parseContent = function(data, callback) {
 		data.postData.content = parseRight(data.postData.content);
 		//quote
 		data.postData.content = parseSpoiler(data.postData.content);
+		data.postData.content = parseSpoilerCustom(data.postData.content);
 	} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
 		//data.userData.signature = parseBR(data.userData.signature);
 		data.userData.signature = parseBolt(data.userData.signature);
@@ -241,6 +249,7 @@ plugin.parseContent = function(data, callback) {
 		data.userData.signature = parseRight(data.userData.signature);
 		//quote
 		data.userData.signature = parseSpoiler(data.userData.signature);
+		data.userData.signature = parseSpoilerCustom(data.userData.signature);
 	}
 	callback(null, data);
 };
