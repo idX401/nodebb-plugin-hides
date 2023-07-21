@@ -2,7 +2,7 @@
 const plugin = {};
 
 const user = require.main.require('./src/user');
-
+/*
 //regex
 const boltRegex = /\[b\]([\s\S]*?)\[\/b\]/gi;
 const italicRegex = /\[i\]([\s\S]*?)\[\/i\]/gi;
@@ -34,6 +34,31 @@ const likesRegex = /\[likes=(.+?)\]([\s\S]*?)\[\/likes\]/gi;
 const useridsRegex = /\[userids=(.+?)\]([\s\S]*?)\[\/userids\]/gi;
 const exceptidsRegex = /\[exceptids=(.+?)\]([\s\S]*?)\[\/exceptids\]/gi;
 
+*/
+const boltRegex = /\[b\]([^[]*(?:\[(?!b\]|\/b\])[^[]*)*)\[\/b\]/gi;
+const italicRegex = /\[i\]([^[]*(?:\[(?!i\]|\/i\])[^[]*)*)\[\/i\]/gi;
+const underlineRegex = /\[u\]([^[]*(?:\[(?!u\]|\/u\])[^[]*)*)\[\/u\]/gi;
+const crossedOutRegex = /\[s\]([^[]*(?:\[(?!s\]|\/s\])[^[]*)*)\[\/s\]/gi;
+//color
+//font
+const sizeRegex = /\[size=(\d+)\]([^[]*(?:\[(?!size=\d+\]|\/size\])[^[]*)*)\[\/size\]/gi;
+const urlRegex = /\[url\]([^[]*(?:\[(?!url\]|\/url\])[^[]*)*)\[\/url\]/gi;
+const emailRegex = /\[email\]([^[]*(?:\[(?!email\]|\/email\])[^[]*)*)\[\/email\]/gi;
+//urlCustom
+//emailCustom
+const imgRegex = /\[img\]([^[]*(?:\[(?!img\]|\/img\])[^[]*)*)\[\/img\]/gi;
+const mediaRegex = /\[media\]([^[]*(?:\[(?!media\]|\/media\])[^[]*)*)\[\/media\]/gi;
+//list
+const leftRegex = /\[left\]([^[]*(?:\[(?!left\]|\/left\])[^[]*)*)\[\/left\]/gi;
+const centerRegex = /\[center\]([^[]*(?:\[(?!center\]|\/center\])[^[]*)*)\[\/center\]/gi;
+const rightRegex =/\[right\]([^[]*(?:\[(?!right\]|\/right\])[^[]*)*)\[\/right\]/gi;
+//quote
+const spoilerRegex = /\[spoiler\]([^[]*(?:\[(?!spoiler\]|\/spoiler\])[^[]*)*)\[\/spoiler\]/gi;
+//spoilerCustom
+//code
+//indent
+const visitorRegex = /\[visitor\]([^[]*(?:\[(?!visitor\]|\/visitor\])[^[]*)*)\[\/visitor\]/gi;
+
 //<a href
 const linkHrefRegex = /<a[^>]*>[^<]*<\/a>/g;
 
@@ -60,20 +85,54 @@ plugin.getUser = async function (uid) {
 	return await user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
 };
 plugin.parseContent = function(data, callback) {
-	function parseSizeBBCode(text) {
-	    // Here is the same regular expression in javascript syntax:
-	    var re = /\[size=(\d+)\]([^[]*(?:\[(?!size=\d+\]|\/size\])[^[]*)*)\[\/size\]/ig;
-	    while(text.search(re) !== -1) {
-	        text = text.replace(re, '<span style="font-size: $1pt">$2</span>');
+	function parseBolt(text) {
+	    while(text.search(boltRegex) !== -1) {
+	        text = text.replace(boltRegex, '<b>$1</b>');
+	    }
+	    return text;
+	}
+	function parseItalic(text) {
+	    while(text.search(italicRegex) !== -1) {
+	        text = text.replace(italicRegex, '<i>$1</i>');
+	    }
+	    return text;
+	}
+	function parseUnderline(text) {
+	    while(text.search(underlineRegex) !== -1) {
+	        text = text.replace(underlineRegex, '<span style="text-decoration: underline">$1</span>');
+	    }
+	    return text;
+	}
+	function parseCrossedOut(text) {
+	    while(text.search(crossedOutRegex) !== -1) {
+	        text = text.replace(crossedOutRegex, '<span style="text-decoration: line-through">$1</span>');
+	    }
+	    return text;
+	}
+	function parseSize(text) {
+	    while(text.search(sizeRegex) !== -1) {
+	        text = text.replace(sizeRegex, '<span style="font-size: $1pt">$2</span>');
 	    }
 	    return text;
 	}
 	if ('string' === typeof data) {
-		data = parseSizeBBCode(data);
+		data = parseBolt(data);
+		data = parseItalic(data);
+		data = parseUnderline(data);
+		data = parseCrossedOut(data);
+		data = parseSize(data);
 	} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
-		data.postData.content = parseSizeBBCode(data.postData.content);
+		data.postData.content = parseBolt(data.postData.content);
+		data.postData.content = parseItalic(data.postData.content);
+		data.postData.content = parseUnderline(data.postData.content);
+		data.postData.content = parseCrossedOut(data.postData.content);
+		data.postData.content = parseSize(data.postData.content);
 	} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
-		data.userData.signature = parseSizeBBCode(data.userData.signature);
+		data.userData.signature = parseBolt(data.userData.signature);
+		data.userData.signature = parseItalic(data.userData.signature);
+		data.userData.signature = parseUnderline(data.userData.signature);
+		data.userData.signature = parseCrossedOut(data.userData.signature);
+		data.userData.signature = parseSize(data.userData.signature);
 	}
 	callback(null, data);
 };
