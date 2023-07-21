@@ -59,7 +59,7 @@ plugin.alterContent = async function (params) {
 plugin.getUser = async function (uid) {
 	return await user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
 };
-plugin.parseContent = async function (params) {
+plugin.parseContent = function(data, callback) {
 	function parseSizeBBCode(text) {
 	    // Here is the same regular expression in javascript syntax:
 	    var re = /\[size=(\d+)\]([^[]*(?:\[(?!size=\d+\]|\/size\])[^[]*)*)\[\/size\]/ig;
@@ -68,10 +68,14 @@ plugin.parseContent = async function (params) {
 	    }
 	    return text;
 	}
-	for (const post of params.posts) {
-		post.content = parseSizeBBCode(post.content);
+	if ('string' === typeof data) {
+		data = parseSizeBBCode(data);
+	} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
+		data.postData.content = parseSizeBBCode(data.postData.content);
+	} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
+		data.userData.signature = parseSizeBBCode(data.userData.signature);
 	}
-	return params;
+	callback(null, data);
 };
 /*
 plugin.parseContent = function(data, callback) {
