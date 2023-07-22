@@ -40,7 +40,7 @@ const italicRegex = /\[i\]([^[]*(?:\[(?!i\]|\/i\])[^[]*)*)\[\/i\]/gi;
 const underlineRegex = /\[u\]([^[]*(?:\[(?!u\]|\/u\])[^[]*)*)\[\/u\]/gi;
 const crossedOutRegex = /\[s\]([^[]*(?:\[(?!s\]|\/s\])[^[]*)*)\[\/s\]/gi;
 const colorRegex = /\[color=(.+)\]([^[]*(?:\[(?!color=.+\]|\/color\])[^[]*)*)\[\/color\]/gi;
-//font
+const fontRegex = /\[font=(.+)\]([^[]*(?:\[(?!font=.+\]|\/font\])[^[]*)*)\[\/font\]/gi;
 const sizeRegex = /\[size=(\d+)\]([^[]*(?:\[(?!size=\d+\]|\/size\])[^[]*)*)\[\/size\]/gi;
 const urlRegex = /\[url\]([^[]*(?:\[(?!url\]|\/url\])[^[]*)*)\[\/url\]/gi;
 const emailRegex = /\[email\]([^[]*(?:\[(?!email\]|\/email\])[^[]*)*)\[\/email\]/gi;
@@ -127,7 +127,12 @@ plugin.parseContent = function(data, callback) {
 	    }
 	    return text;
 	}
-	//font
+	function parseFont(text) {
+	    while(text.search(fontRegex) !== -1) {
+	        text = text.replace(fontRegex, '<span style="font-family: $1">$2</span>');
+	    }
+	    return text;
+	}
 	function parseSize(text) {
 	    while(text.search(sizeRegex) !== -1) {
 	        text = text.replace(sizeRegex, '<span style="font-size: $1pt">$2</span>');
@@ -227,7 +232,7 @@ plugin.parseContent = function(data, callback) {
 		data = parseUnderline(data);
 		data = parseCrossedOut(data);
 		data = parseColor(data);
-		//font
+		data = parseFont(data);
 		data = parseSize(data);
 		data = parseUrl(data);
 		data = parseEmail(data);
@@ -252,7 +257,7 @@ plugin.parseContent = function(data, callback) {
 		data.postData.content = parseUnderline(data.postData.content);
 		data.postData.content = parseCrossedOut(data.postData.content);
 		data.postData.content = parseColor(data.postData.content);
-		//font
+		data.postData.content = parseFont(data.postData.content);
 		data.postData.content = parseSize(data.postData.content);
 		data.postData.content = parseUrl(data.postData.content);
 		data.postData.content = parseEmail(data.postData.content);
@@ -277,7 +282,7 @@ plugin.parseContent = function(data, callback) {
 		data.userData.signature = parseUnderline(data.userData.signature);
 		data.userData.signature = parseCrossedOut(data.userData.signature);
 		data.userData.signature = parseColor(data.userData.signature);
-		//font
+		data.userData.signature = parseFont(data.userData.signature);
 		data.userData.signature = parseSize(data.userData.signature);
 		data.userData.signature = parseUrl(data.userData.signature);
 		data.userData.signature = parseEmail(data.userData.signature);
