@@ -52,14 +52,15 @@ const mediaRegex = /\[media\]([^[]*(?:\[(?!media\]|\/media\])[^[]*)*)\[\/media\]
 const leftRegex = /\[left\]([^[]*(?:\[(?!left\]|\/left\])[^[]*)*)\[\/left\]/gi;
 const centerRegex = /\[center\]([^[]*(?:\[(?!center\]|\/center\])[^[]*)*)\[\/center\]/gi;
 const rightRegex =/\[right\]([^[]*(?:\[(?!right\]|\/right\])[^[]*)*)\[\/right\]/gi;
-//quote
+const quoteRegex =/\[quote\]([^[]*(?:\[(?!quote\]|\/quote\])[^[]*)*)\[\/quote\]/gi;
 const spoilerFixRegex = /\[spoiler=\"(.+)\"\]/gi;
 const spoilerRegex = /\[spoiler\]([^[]*(?:\[(?!spoiler\]|\/spoiler\])[^[]*)*)\[\/spoiler\]/gi;
 const spoilerCustomRegex = /\[spoiler=(.+)\]([^[]*(?:\[(?!spoiler=.+\]|\/spoiler\])[^[]*)*)\[\/spoiler\]/gi;
 //code
 //indent
-const visitorRegex = /\[visitor\]([^[]*(?:\[(?!visitor\]|\/visitor\])[^[]*)*)\[\/visitor\]/gi;
 
+
+const visitorRegex = /\[visitor\]([^[]*(?:\[(?!visitor\]|\/visitor\])[^[]*)*)\[\/visitor\]/gi;
 //<a href
 const linkHrefRegex = /<a[^>]*>[^<]*<\/a>/g;
 
@@ -187,7 +188,13 @@ plugin.parseContent = function(data, callback) {
 	    }
 	    return text;
 	}
-	//quote
+	//quote quoteRegex
+	function parseQuote(text) {
+	    while(text.search(quoteRegex) !== -1) {
+	        text = text.replace(quoteRegex, '$1');
+	    }
+	    return text;
+	}
 	function parseSpoilerFix(text) {
 	    while(text.search(spoilerFixRegex) !== -1) {
 	        text = text.replace(spoilerFixRegex, '[SPOILER=$1]');
@@ -208,7 +215,7 @@ plugin.parseContent = function(data, callback) {
 	}
 	if ('string' === typeof data) {
 		//data = '<p dir="auto">'+data+'<p>';
-		data = parseBR(data);
+		//data = parseBR(data);
 		data = parseBolt(data);
 		data = parseItalic(data);
 		data = parseUnderline(data);
@@ -232,7 +239,7 @@ plugin.parseContent = function(data, callback) {
 		data = parseSpoilerCustom(data);
 	} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
 		//data.postData.content = '<p dir="auto">'+data.postData.content+'<p>';
-		data.postData.content = parseBR(data.postData.content);
+		//data.postData.content = parseBR(data.postData.content);
 		data.postData.content = parseBolt(data.postData.content);
 		data.postData.content = parseItalic(data.postData.content);
 		data.postData.content = parseUnderline(data.postData.content);
