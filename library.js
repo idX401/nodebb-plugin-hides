@@ -39,13 +39,13 @@ const boltRegex = /\[b\]([^[]*(?:\[(?!b\]|\/b\])[^[]*)*)\[\/b\]/gi;
 const italicRegex = /\[i\]([^[]*(?:\[(?!i\]|\/i\])[^[]*)*)\[\/i\]/gi;
 const underlineRegex = /\[u\]([^[]*(?:\[(?!u\]|\/u\])[^[]*)*)\[\/u\]/gi;
 const crossedOutRegex = /\[s\]([^[]*(?:\[(?!s\]|\/s\])[^[]*)*)\[\/s\]/gi;
-const colorRegex = /\[color=(.+)\]([^[]*(?:\[(?!color=.+\]|\/color\])[^[]*)*)\[\/color\]/gi;
-const fontRegex = /\[font=(.+)\]([^[]*(?:\[(?!font=.+\]|\/font\])[^[]*)*)\[\/font\]/gi;
+const colorRegex = /\[color=(.+?)\]([^[]*(?:\[(?!color=.+\]|\/color\])[^[]*)*)\[\/color\]/gi;
+const fontRegex = /\[font=(.+?)\]([^[]*(?:\[(?!font=.+\]|\/font\])[^[]*)*)\[\/font\]/gi;
 const sizeRegex = /\[size=(\d+)\]([^[]*(?:\[(?!size=\d+\]|\/size\])[^[]*)*)\[\/size\]/gi;
 const urlRegex = /\[url\]([^[]*(?:\[(?!url\]|\/url\])[^[]*)*)\[\/url\]/gi;
 const emailRegex = /\[email\]([^[]*(?:\[(?!email\]|\/email\])[^[]*)*)\[\/email\]/gi;
-const urlCustomRegex = /\[url=(.+)\]([^[]*(?:\[(?!url=.+\]|\/url\])[^[]*)*)\[\/url\]/gi;
-const emailCustomRegex = /\[email=(.+)\]([^[]*(?:\[(?!email=.+\]|\/email\])[^[]*)*)\[\/email\]/gi;
+const urlCustomRegex = /\[url=(.+?)\]([^[]*(?:\[(?!url=.+\]|\/url\])[^[]*)*)\[\/url\]/gi;
+const emailCustomRegex = /\[email=(.+?)\]([^[]*(?:\[(?!email=.+\]|\/email\])[^[]*)*)\[\/email\]/gi;
 const imgRegex = /\[img\]([^[]*(?:\[(?!img\]|\/img\])[^[]*)*)\[\/img\]/gi;
 const mediaRegex = /\[media\]([^[]*(?:\[(?!media\]|\/media\])[^[]*)*)\[\/media\]/gi;
 //list
@@ -53,15 +53,21 @@ const leftRegex = /\[left\]([^[]*(?:\[(?!left\]|\/left\])[^[]*)*)\[\/left\]/gi;
 const centerRegex = /\[center\]([^[]*(?:\[(?!center\]|\/center\])[^[]*)*)\[\/center\]/gi;
 const rightRegex = /\[right\]([^[]*(?:\[(?!right\]|\/right\])[^[]*)*)\[\/right\]/gi;
 const quoteRegex = /\[quote\]([^[]*(?:\[(?!quote\]|\/quote\])[^[]*)*)\[\/quote\]/gi;
-const quoteCustomRegex = /\[quote=(.+)\]([^[]*(?:\[(?!quote=.+\]|\/quote\])[^[]*)*)\[\/quote\]/gi;
-const spoilerFixRegex = /\[spoiler=\"(.+)\"\]/gi;
+const quoteCustomRegex = /\[quote=(.+?)\]([^[]*(?:\[(?!quote=.+\]|\/quote\])[^[]*)*)\[\/quote\]/gi;
+const spoilerFixRegex = /\[spoiler=\"(.+?)\"\]/gi;
 const spoilerRegex = /\[spoiler\]([^[]*(?:\[(?!spoiler\]|\/spoiler\])[^[]*)*)\[\/spoiler\]/gi;
-const spoilerCustomRegex = /\[spoiler=(.+)\]([^[]*(?:\[(?!spoiler=.+\]|\/spoiler\])[^[]*)*)\[\/spoiler\]/gi;
+const spoilerCustomRegex = /\[spoiler=(.+?)\]([^[]*(?:\[(?!spoiler=.+\]|\/spoiler\])[^[]*)*)\[\/spoiler\]/gi;
 //code
-//indent
+//table
 
-
+//hide
+//club
+//days
+//likes
+//userids
+//exceptids
 const visitorRegex = /\[visitor\]([^[]*(?:\[(?!visitor\]|\/visitor\])[^[]*)*)\[\/visitor\]/gi;
+
 //<a href
 const linkHrefRegex = /<a[^>]*>[^<]*<\/a>/g;
 
