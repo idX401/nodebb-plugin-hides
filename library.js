@@ -42,11 +42,13 @@ const crossedOutRegex = /\[s\]([^[]*(?:\[(?!s\]|\/s\])[^[]*)*)\[\/s\]/gi;
 const colorRegex = /\[color=(.+?)\]([^[]*(?:\[(?!color=.+\]|\/color\])[^[]*)*)\[\/color\]/gi;
 const fontRegex = /\[font=(.+?)\]([^[]*(?:\[(?!font=.+\]|\/font\])[^[]*)*)\[\/font\]/gi;
 const sizeRegex = /\[size=(\d+)\]([^[]*(?:\[(?!size=\d+\]|\/size\])[^[]*)*)\[\/size\]/gi;
+const blurRegex = /\[blur\]([^[]*(?:\[(?!blur\]|\/blur\])[^[]*)*)\[\/blur\]/gi;
 const urlRegex = /\[url\]([^[]*(?:\[(?!url\]|\/url\])[^[]*)*)\[\/url\]/gi;
 const emailRegex = /\[email\]([^[]*(?:\[(?!email\]|\/email\])[^[]*)*)\[\/email\]/gi;
 const urlCustomRegex = /\[url=(.+?)\]([^[]*(?:\[(?!url=.+\]|\/url\])[^[]*)*)\[\/url\]/gi;
 const emailCustomRegex = /\[email=(.+?)\]([^[]*(?:\[(?!email=.+\]|\/email\])[^[]*)*)\[\/email\]/gi;
 const imgRegex = /\[img\]([^[]*(?:\[(?!img\]|\/img\])[^[]*)*)\[\/img\]/gi;
+const imgCustomRegex = /\[img=(.+?)\]([^[]*(?:\[(?!img=.+\]|\/img\])[^[]*)*)\[\/img\]/gi;
 const mediaRegex = /\[media\]([^[]*(?:\[(?!media\]|\/media\])[^[]*)*)\[\/media\]/gi;
 //list
 const leftRegex = /\[left\]([^[]*(?:\[(?!left\]|\/left\])[^[]*)*)\[\/left\]/gi;
@@ -145,6 +147,12 @@ plugin.parseContent = function(data, callback) {
 	    }
 	    return text;
 	}
+	function parseBlur(text) {
+	    while(text.search(blurRegex) !== -1) {
+	        text = text.replace(blurRegex, '<span class="blur-text">$1</span>');
+	    }
+	    return text;
+	}
 	function parseUrl(text) {
 	    while(text.search(urlRegex) !== -1) {
 	        text = text.replace(urlRegex, '<a href="$1" target="_blank" class="externalLink" rel="nofollow">$1</a>');
@@ -172,6 +180,12 @@ plugin.parseContent = function(data, callback) {
 	function parseImg(text) {
 	    while(text.search(imgRegex) !== -1) {
 	        text = text.replace(imgRegex, '<a href="$1" target="_blank" rel="noopener"><img src="$1" class="img-fluid img-markdown"></a>');
+	    }
+	    return text;
+	}
+	function parseImgCustom(text) {
+	    while(text.search(imgCustomRegex) !== -1) {
+	        text = text.replace(imgCustomRegex, '<a href="$2" target="_blank" rel="noopener"><img style="width:$1px" src="$2" class="img-fluid img-markdown"></a>');
 	    }
 	    return text;
 	}
@@ -240,11 +254,13 @@ plugin.parseContent = function(data, callback) {
 		data = parseColor(data);
 		data = parseFont(data);
 		data = parseSize(data);
+		data = parseBlur(data);
 		data = parseUrl(data);
 		data = parseEmail(data);
 		data = parseUrlCustom(data);
 		data = parseEmailCustom(data);
 		data = parseImg(data);
+		data = parseImgCustom(data);
 		data = parseMedia(data);
 		//list
 		data = parseLeft(data);
@@ -265,11 +281,13 @@ plugin.parseContent = function(data, callback) {
 		data.postData.content = parseColor(data.postData.content);
 		data.postData.content = parseFont(data.postData.content);
 		data.postData.content = parseSize(data.postData.content);
+		data.postData.content = parseBlur(data.postData.content);
 		data.postData.content = parseUrl(data.postData.content);
 		data.postData.content = parseEmail(data.postData.content);
 		data.postData.content = parseUrlCustom(data.postData.content);
 		data.postData.content = parseEmailCustom(data.postData.content);
 		data.postData.content = parseImg(data.postData.content);
+		data.postData.content = parseImgCustom(data.postData.content);
 		data.postData.content = parseMedia(data.postData.content);
 		//list
 		data.postData.content = parseLeft(data.postData.content);
@@ -290,11 +308,13 @@ plugin.parseContent = function(data, callback) {
 		data.userData.signature = parseColor(data.userData.signature);
 		data.userData.signature = parseFont(data.userData.signature);
 		data.userData.signature = parseSize(data.userData.signature);
+		data.userData.signature = parseBlur(data.userData.signature);
 		data.userData.signature = parseUrl(data.userData.signature);
 		data.userData.signature = parseEmail(data.userData.signature);
 		data.userData.signature = parseUrlCustom(data.userData.signature);
 		data.userData.signature = parseEmailCustom(data.userData.signature);
 		data.userData.signature = parseImg(data.userData.signature);
+		data.userData.signature = parseImgCustom(data.userData.signature);
 		data.userData.signature = parseMedia(data.userData.signature);
 		//list
 		data.userData.signature = parseLeft(data.userData.signature);
