@@ -51,8 +51,9 @@ const mediaRegex = /\[media\]([^[]*(?:\[(?!media\]|\/media\])[^[]*)*)\[\/media\]
 //list
 const leftRegex = /\[left\]([^[]*(?:\[(?!left\]|\/left\])[^[]*)*)\[\/left\]/gi;
 const centerRegex = /\[center\]([^[]*(?:\[(?!center\]|\/center\])[^[]*)*)\[\/center\]/gi;
-const rightRegex =/\[right\]([^[]*(?:\[(?!right\]|\/right\])[^[]*)*)\[\/right\]/gi;
-const quoteRegex =/\[quote\]([^[]*(?:\[(?!quote\]|\/quote\])[^[]*)*)\[\/quote\]/gi;
+const rightRegex = /\[right\]([^[]*(?:\[(?!right\]|\/right\])[^[]*)*)\[\/right\]/gi;
+const quoteRegex = /\[quote\]([^[]*(?:\[(?!quote\]|\/quote\])[^[]*)*)\[\/quote\]/gi;
+const quoteCustomRegex = /\[quote=(.+)\]([^[]*(?:\[(?!quote=.+\]|\/quote\])[^[]*)*)\[\/quote\]/gi;
 const spoilerFixRegex = /\[spoiler=\"(.+)\"\]/gi;
 const spoilerRegex = /\[spoiler\]([^[]*(?:\[(?!spoiler\]|\/spoiler\])[^[]*)*)\[\/spoiler\]/gi;
 const spoilerCustomRegex = /\[spoiler=(.+)\]([^[]*(?:\[(?!spoiler=.+\]|\/spoiler\])[^[]*)*)\[\/spoiler\]/gi;
@@ -194,6 +195,12 @@ plugin.parseContent = function(data, callback) {
 	    }
 	    return text;
 	}
+	function parseQuoteCustom(text) {
+	    while(text.search(quoteCustomRegex) !== -1) {
+	        text = text.replace(quoteCustomRegex, '<blockquote>@$1<br>$2</blockquote>');
+	    }
+	    return text;
+	}
 	function parseSpoilerFix(text) {
 	    while(text.search(spoilerFixRegex) !== -1) {
 	        text = text.replace(spoilerFixRegex, '[SPOILER=$1]');
@@ -232,7 +239,8 @@ plugin.parseContent = function(data, callback) {
 		data = parseLeft(data);
 		data = parseCenter(data);
 		data = parseRight(data);
-		//quote
+		data = parseQuote(data);
+		data = parseQuoteCustom(data);
 		data = parseSpoilerFix(data);
 		data = parseSpoiler(data);
 		data = parseSpoilerCustom(data);
@@ -256,7 +264,8 @@ plugin.parseContent = function(data, callback) {
 		data.postData.content = parseLeft(data.postData.content);
 		data.postData.content = parseCenter(data.postData.content);
 		data.postData.content = parseRight(data.postData.content);
-		//quote
+		data.postData.content = parseQuote(data.postData.content);
+		data.postData.content = parseQuoteCustom(data.postData.content);
 		data.postData.content = parseSpoilerFix(data.postData.content);
 		data.postData.content = parseSpoiler(data.postData.content);
 		data.postData.content = parseSpoilerCustom(data.postData.content);
@@ -280,7 +289,8 @@ plugin.parseContent = function(data, callback) {
 		data.userData.signature = parseLeft(data.userData.signature);
 		data.userData.signature = parseCenter(data.userData.signature);
 		data.userData.signature = parseRight(data.userData.signature);
-		//quote
+		data.userData.signature = parseQuote(data.userData.signature);
+		data.userData.signature = parseQuoteCustom(data.userData.signature);
 		data.userData.signature = parseSpoilerFix(data.userData.signature);
 		data.userData.signature = parseSpoiler(data.userData.signature);
 		data.userData.signature = parseSpoilerCustom(data.userData.signature);
