@@ -44,8 +44,8 @@ const colorRegex = /\[color=(.+)\]([^[]*(?:\[(?!color=.+\]|\/color\])[^[]*)*)\[\
 const sizeRegex = /\[size=(\d+)\]([^[]*(?:\[(?!size=\d+\]|\/size\])[^[]*)*)\[\/size\]/gi;
 const urlRegex = /\[url\]([^[]*(?:\[(?!url\]|\/url\])[^[]*)*)\[\/url\]/gi;
 const emailRegex = /\[email\]([^[]*(?:\[(?!email\]|\/email\])[^[]*)*)\[\/email\]/gi;
-//urlCustom
-//emailCustom
+const urlCustomRegex = /\[url=(.+)\]([^[]*(?:\[(?!url=.+\]|\/url\])[^[]*)*)\[\/url\]/gi;
+const emailCustomRegex = /\[email=(.+)\]([^[]*(?:\[(?!email=.+\]|\/email\])[^[]*)*)\[\/email\]/gi;
 const imgRegex = /\[img\]([^[]*(?:\[(?!img\]|\/img\])[^[]*)*)\[\/img\]/gi;
 const mediaRegex = /\[media\]([^[]*(?:\[(?!media\]|\/media\])[^[]*)*)\[\/media\]/gi;
 //list
@@ -144,8 +144,18 @@ plugin.parseContent = function(data, callback) {
 	    }
 	    return text;
 	}
-	//urlCustom
-	//emailCustom
+	function parseUrlCustom(text) {
+	    while(text.search(urlCustomRegex) !== -1) {
+	        text = text.replace(urlCustomRegex, '<a href="$1" target="_blank" class="externalLink" rel="nofollow">$2</a>');
+	    }
+	    return text;
+	}
+	function parseEmailCustom(text) {
+	    while(text.search(emailCustomRegex) !== -1) {
+	        text = text.replace(emailCustomRegex, '<a href="mailto:$1">$2</a>');
+	    }
+	    return text;
+	}
 	function parseImg(text) {
 	    while(text.search(imgRegex) !== -1) {
 	        text = text.replace(imgRegex, '<a href="$1" target="_blank" rel="noopener"><img src="$1" class="img-fluid img-markdown"></a>');
@@ -207,8 +217,8 @@ plugin.parseContent = function(data, callback) {
 		data = parseSize(data);
 		data = parseUrl(data);
 		data = parseEmail(data);
-		//urlCustom
-		//emailCustom
+		data = parseUrlCustom(data);
+		data = parseEmailCustom(data);
 		data = parseImg(data);
 		data = parseMedia(data);
 		//list
@@ -230,8 +240,8 @@ plugin.parseContent = function(data, callback) {
 		data.postData.content = parseSize(data.postData.content);
 		data.postData.content = parseUrl(data.postData.content);
 		data.postData.content = parseEmail(data.postData.content);
-		//urlCustom
-		//emailCustom
+		data.postData.content = parseUrlCustom(data.postData.content);
+		data.postData.content = parseEmailCustom(data.postData.content);
 		data.postData.content = parseImg(data.postData.content);
 		data.postData.content = parseMedia(data.postData.content);
 		//list
@@ -253,8 +263,8 @@ plugin.parseContent = function(data, callback) {
 		data.userData.signature = parseSize(data.userData.signature);
 		data.userData.signature = parseUrl(data.userData.signature);
 		data.userData.signature = parseEmail(data.userData.signature);
-		//urlCustom
-		//emailCustom
+		data.userData.signature = parseUrlCustom(data.userData.signature);
+		data.userData.signature = parseEmailCustom(data.userData.signature);
 		data.userData.signature = parseImg(data.userData.signature);
 		data.userData.signature = parseMedia(data.userData.signature);
 		//list
