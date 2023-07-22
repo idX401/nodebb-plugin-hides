@@ -256,7 +256,7 @@ plugin.parseContent = function(data, callback) {
 		data.postData.content = parseSpoilerCustom(data.postData.content);
 	} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
 		//data.userData.signature = '<p dir="auto">'+data.userData.signature+'<p>';
-		data.userData.signature = parseBR(data.userData.signature);
+		//data.userData.signature = parseBR(data.userData.signature);
 		data.userData.signature = parseBolt(data.userData.signature);
 		data.userData.signature = parseItalic(data.userData.signature);
 		data.userData.signature = parseUnderline(data.userData.signature);
