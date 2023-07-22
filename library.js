@@ -62,8 +62,8 @@ const spoilerCustomRegex = /\[spoiler=(.+?)\]([^[]*(?:\[(?!spoiler=.+\]|\/spoile
 //code
 //table
 
-//hide
-//club
+const hideRegex = /\[hide\]([^[]*(?:\[(?!hide\]|\/hide\])[^[]*)*)\[\/hide\]/gi;
+const clubRegex = /\[club\]([^[]*(?:\[(?!club\]|\/club\])[^[]*)*)\[\/club\]/gi;
 //days
 //likes
 //userids
@@ -71,6 +71,7 @@ const spoilerCustomRegex = /\[spoiler=(.+?)\]([^[]*(?:\[(?!spoiler=.+\]|\/spoile
 const visitorRegex = /\[visitor\]([^[]*(?:\[(?!visitor\]|\/visitor\])[^[]*)*)\[\/visitor\]/gi;
 
 //<a href
+const linkRegex = var expression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 const linkHrefRegex = /<a[^>]*>[^<]*<\/a>/g;
 
 plugin.alterContent = async function (params) {
@@ -96,6 +97,12 @@ plugin.getUser = async function (uid) {
 	return await user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
 };
 plugin.parseContent = function(data, callback) {
+	function parseLinks(text) {
+	    while(text.search(linkRegex) !== -1) {
+	        text = text.replace(linkRegex, '<a href="$1" target="_blank" class="externalLink" rel="nofollow">$1</a>');
+	    }
+	    return text;
+	}
 	function parseBR(text){
 	    return text.replace(/\n/,'<br>');
 	}
@@ -245,6 +252,7 @@ plugin.parseContent = function(data, callback) {
 	    return text;
 	}
 	if ('string' === typeof data) {
+		data = parseLinks(data);
 		//data = '<p dir="auto">'+data+'<p>';
 		//data = parseBR(data);
 		data = parseBolt(data);
@@ -272,6 +280,7 @@ plugin.parseContent = function(data, callback) {
 		data = parseSpoiler(data);
 		data = parseSpoilerCustom(data);
 	} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
+		data.postData.content = parseLinks(data.postData.content);
 		//data.postData.content = '<p dir="auto">'+data.postData.content+'<p>';
 		//data.postData.content = parseBR(data.postData.content);
 		data.postData.content = parseBolt(data.postData.content);
@@ -299,6 +308,7 @@ plugin.parseContent = function(data, callback) {
 		data.postData.content = parseSpoiler(data.postData.content);
 		data.postData.content = parseSpoilerCustom(data.postData.content);
 	} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
+		data.userData.signature = parseLinks(data.userData.signature);
 		//data.userData.signature = '<p dir="auto">'+data.userData.signature+'<p>';
 		//data.userData.signature = parseBR(data.userData.signature);
 		data.userData.signature = parseBolt(data.userData.signature);
