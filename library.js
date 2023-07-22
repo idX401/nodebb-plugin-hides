@@ -216,6 +216,7 @@ plugin.parseContent = function(data, callback) {
 		data = parseCenter(data);
 		data = parseRight(data);
 		//quote
+		data = parseSpoilerFix(data);
 		data = parseSpoiler(data);
 		data = parseSpoilerCustom(data);
 	} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
@@ -238,6 +239,7 @@ plugin.parseContent = function(data, callback) {
 		data.postData.content = parseCenter(data.postData.content);
 		data.postData.content = parseRight(data.postData.content);
 		//quote
+		data.postData.content = parseSpoilerFix(data.postData.content);
 		data.postData.content = parseSpoiler(data.postData.content);
 		data.postData.content = parseSpoilerCustom(data.postData.content);
 	} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
@@ -260,6 +262,7 @@ plugin.parseContent = function(data, callback) {
 		data.userData.signature = parseCenter(data.userData.signature);
 		data.userData.signature = parseRight(data.userData.signature);
 		//quote
+		data.userData.signature = parseSpoilerFix(data.userData.signature);
 		data.userData.signature = parseSpoiler(data.userData.signature);
 		data.userData.signature = parseSpoilerCustom(data.userData.signature);
 	}
