@@ -53,6 +53,7 @@ const leftRegex = /\[left\]([^[]*(?:\[(?!left\]|\/left\])[^[]*)*)\[\/left\]/gi;
 const centerRegex = /\[center\]([^[]*(?:\[(?!center\]|\/center\])[^[]*)*)\[\/center\]/gi;
 const rightRegex =/\[right\]([^[]*(?:\[(?!right\]|\/right\])[^[]*)*)\[\/right\]/gi;
 //quote
+const spoilerFixRegex = /\[spoiler=\"(.+)\"\]/gi;
 const spoilerRegex = /\[spoiler\]([^[]*(?:\[(?!spoiler\]|\/spoiler\])[^[]*)*)\[\/spoiler\]/gi;
 const spoilerCustomRegex = /\[spoiler=(.+)\]([^[]*(?:\[(?!spoiler=.+\]|\/spoiler\])[^[]*)*)\[\/spoiler\]/gi;
 //code
@@ -177,6 +178,12 @@ plugin.parseContent = function(data, callback) {
 	    return text;
 	}
 	//quote
+	function parseSpoilerFix(text) {
+	    while(text.search(spoilerFixRegex) !== -1) {
+	        text = text.replace(spoilerFixRegex, '[SPOILER=$1]');
+	    }
+	    return text;
+	}
 	function parseSpoiler(text) {
 	    while(text.search(spoilerRegex) !== -1) {
 	        text = text.replace(spoilerRegex, '<div><div href="#" class="show-spoiler btn btn-md btn-default waves-effect" title="Сlick to show or hide"><i class="fa fa-eye-slash fa-fw"></i><span class="btn-text" data-show_text="spoiler" data-hide_text="spoiler">spoiler</span></div><div class="spoiler hidden">$1</div></div>');
