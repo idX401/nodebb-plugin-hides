@@ -7,7 +7,7 @@
   "languages": "languages",
   "defaultLang": "ru",
   "staticDirs": {"static": "./static"},
-  "less": ["./static/style.less"],
+  "css": [ "./static/style.css" ],
   "scripts": [ "./static/spoilers.js" ],
   "hooks": [
       { "hook": "filter:post.getPosts", "method": "alterContent" },
