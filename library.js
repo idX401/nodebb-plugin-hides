@@ -188,10 +188,9 @@ plugin.parseContent = function(data, callback) {
 	    }
 	    return text;
 	}
-	//quote quoteRegex
 	function parseQuote(text) {
 	    while(text.search(quoteRegex) !== -1) {
-	        text = text.replace(quoteRegex, '$1');
+	        text = text.replace(quoteRegex, '<blockquote>$1</blockquote>');
 	    }
 	    return text;
 	}
