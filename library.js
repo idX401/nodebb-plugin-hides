@@ -79,12 +79,29 @@ plugin.alterContent = async function (params) {
 	//bolt [b][/b]
 	//post.content = post.content.replace(boltRegex, "<strong>$1</strong>");
 	//hide links for guest
+	function parseLinkHref(text) {
+	    while(text.search(linkHrefRegex) !== -1) {
+	        text = text.replace(linkHrefRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+	    }
+	    return text;
+	}
+	function parseHide(text) {
+	    while(text.search(hideRegex) !== -1) {
+	        text = text.replace(hideRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+	    }
+	    return text;
+	}
+	function parseClub(text) {
+	    while(text.search(hideRegex) !== -1) {
+	        text = text.replace(hideRegex, '<b>Только администрация может просмотреть это сообщение</b>');
+	    }
+	    return text;
+	}
 	if (!params.caller.uid) {
 		for (const post of params.posts) {
-			post.content = post.content.replace(
-				linkHrefRegex,
-				'<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>'
-			);
+			post.content = parseLinkHref(post.content);
+			post.content = parseHide(post.content);
+			post.content = parseClub(post.content);
 		}
 	}else{
 		let userData = await plugin.getUser(params.caller.uid);
