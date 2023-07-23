@@ -86,7 +86,7 @@ plugin.alterContent = async function (params) {
 	    return text.replace(hideRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
 	}
 	function parseClub(text) {
-	    return text.replace(hideRegex, '<b>Только администрация может просмотреть это сообщение</b>');;
+	    return text.replace(clubRegex, '<b>Только администрация может просмотреть это сообщение</b>');;
 	}
 	if (!params.caller.uid) {
 		for (const post of params.posts) {
