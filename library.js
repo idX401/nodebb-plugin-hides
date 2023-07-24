@@ -2,39 +2,7 @@
 const plugin = {};
 
 const user = require.main.require('./src/user');
-/*
-//regex
-const boltRegex = /\[b\]([\s\S]*?)\[\/b\]/gi;
-const italicRegex = /\[i\]([\s\S]*?)\[\/i\]/gi;
-const underlineRegex = /\[u\]([\s\S]*?)\[\/u\]/gi;
-const crossedOutRegex = /\[s\]([\s\S]*?)\[\/s\]/gi;
-const colorRegex = /\[color=(.+?)\]([\s\S]*?)\[\/color\]/gi;
-const fontRegex = /\[font=(.+?)\]([\s\S]*?)\[\/font\]/gi;
-const sizeRegex = /\[size=(.+?)\]([\s\S]*?)\[\/size\]/gi;
-const urlRegex = /\[url\](.+?)\[\/url\]/gi;
-const emailRegex = /\[email\](.+?)\[\/email\]/gi;
-const urlCustomRegex = /\[url=(.+?)\]([\s\S]*?)\[\/url\]/gi;
-const emailCustomRegex = /\[email=(.+?)\]([\s\S]*?)\[\/email\]/gi;
-const imgRegex = /\[img\](.+?)\[\/img\]/gi;
-const mediaRegex = /\[media=(.+?)\](.+?)\[\/media\]/gi;
-//LIST
-const leftRegex = /\[left\]([\s\S]*?)\[\/left\]/gi;
-const centerRegex = /\[center\]([\s\S]*?)\[\/center\]/gi;
-const rightRegex = /\[right\]([\s\S]*?)\[\/right\]/gi;
-//QUOTE
-const spoilerRegex = /\[spoiler\]([\s\S]*?)\[\/spoiler\]/gi;
-const spoilerCustomRegex = /\[spoiler=(.+?)\]([\s\S]*?)\[\/spoiler\]/gi;
-//CODE
-//INDENT
-const visitorRegex = /\[visitor\]([\s\S]*?)\[\/visitor\]/gi;
 
-const clubRegex =  /\[club\]([\s\S]*?)\[\/club\]/gi;
-const daysRegex = /\[days=(.+?)\]([\s\S]*?)\[\/days\]/gi;
-const likesRegex = /\[likes=(.+?)\]([\s\S]*?)\[\/likes\]/gi;
-const useridsRegex = /\[userids=(.+?)\]([\s\S]*?)\[\/userids\]/gi;
-const exceptidsRegex = /\[exceptids=(.+?)\]([\s\S]*?)\[\/exceptids\]/gi;
-
-*/
 const boltRegex = /\[b\]([^[]*(?:\[(?!b\]|\/b\])[^[]*)*)\[\/b\]/gi;
 const italicRegex = /\[i\]([^[]*(?:\[(?!i\]|\/i\])[^[]*)*)\[\/i\]/gi;
 const underlineRegex = /\[u\]([^[]*(?:\[(?!u\]|\/u\])[^[]*)*)\[\/u\]/gi;
@@ -64,10 +32,10 @@ const spoilerCustomRegex = /\[spoiler=(.+?)\]([^[]*(?:\[(?!spoiler=.+\]|\/spoile
 
 const hideRegex = /\[hide\]([^[]*(?:\[(?!hide\]|\/hide\])[^[]*)*)\[\/hide\]/gi;
 const clubRegex = /\[club\]([^[]*(?:\[(?!club\]|\/club\])[^[]*)*)\[\/club\]/gi;
-//days
-//likes
-//userids
-//exceptids
+const daysRegex = /\[days=(.+?)\]([^[]*(?:\[(?!days=.+\]|\/days\])[^[]*)*)\[\/days\]/gi;
+const likesRegex = /\[likes=(.+?)\]([^[]*(?:\[(?!likes=.+\]|\/likes\])[^[]*)*)\[\/likes\]/gi;
+const useridsRegex = /\[userids=(.+?)\]([^[]*(?:\[(?!userids=.+\]|\/userids\])[^[]*)*)\[\/userids\]/gi;
+const exceptidsRegex = /\[exceptids=(.+?)\]([^[]*(?:\[(?!exceptids=.+\]|\/exceptids\])[^[]*)*)\[\/exceptids\]/gi;
 const visitorRegex = /\[visitor\]([^[]*(?:\[(?!visitor\]|\/visitor\])[^[]*)*)\[\/visitor\]/gi;
 
 //<a href
@@ -85,8 +53,19 @@ plugin.alterContent = async function (params) {
 	function parseHide(text) {
 	    return text.replace(hideRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
 	}
-	function parseClub(text) {
-	    return text.replace(clubRegex, '<b>Только администрация может просмотреть это сообщение</b>');;
+	function parseClub(text, user) {
+	    if(user.groupTitleArray.includes('administrators') || user.groupTitleArray.includes('Global Moderators')){
+	    	return text;
+	    }else{
+	    	return text.replace(clubRegex, '<b>[Только администрация может просмотреть это сообщение]</b>');
+	    }
+	}
+	function parseVisitor(text, user) {
+	    if (typeof myVar !== 'undefined'){
+		return text.replace(visitorRegex, user.username);
+	    }else{
+	    	return text.replace(visitorRegex, 'гость');
+	    }
 	}
 	if (!params.caller.uid) {
 		for (const post of params.posts) {
@@ -96,7 +75,10 @@ plugin.alterContent = async function (params) {
 		}
 	}else{
 		let userData = await plugin.getUser(params.caller.uid);
-		console.log(params,'-3-',userData);
+		for (const post of params.posts) {
+			post.content = parseClub(post.content,userData);
+		}
+		//console.log(params,'-3-',userData);
 	}
 	return params;
 };
