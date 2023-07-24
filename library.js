@@ -58,6 +58,7 @@ plugin.alterContent = async function (params) {
 	    if(text.search(postsRegex) !== -1) {
 		    if (typeof user !== 'undefined'){
 			let hideData = postsRegex.exec(text);
+			console.log(hideData);
 			if(user.postcount >= parseInt(hideData[1])){
 				return text;
 			}else{
