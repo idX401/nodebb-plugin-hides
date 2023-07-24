@@ -54,10 +54,12 @@ plugin.alterContent = async function (params) {
 	    return text.replace(hideRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
 	}
 	function parseClub(text, user) {
-	    if(user.groupTitleArray.includes('administrators') || user.groupTitleArray.includes('Global Moderators')){
-	    	return text;
+	    if (typeof user.username !== 'undefined'){
+		if(user.groupTitleArray.includes('administrators') || user.groupTitleArray.includes('Global Moderators')){
+			return text;
+		}
 	    }else{
-	    	return text.replace(clubRegex, '<b>[Только администрация может просмотреть это сообщение]</b>');
+		return text.replace(clubRegex, '<b>[Только администрация может просмотреть это сообщение]</b>');
 	    }
 	}
 	function parseVisitor(text, user) {
