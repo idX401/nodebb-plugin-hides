@@ -128,7 +128,7 @@ plugin.alterContent = async function (params) {
 		console.log(params,'-3-',userData);
 		for (const post of params.posts) {
 			post.content = parseClub(post.content,userData);
-			post.content = parseLikes(post.content);
+			post.content = parseLikes(post.content,userData);
 			post.content = parsePosts(post.content,userData);
 			post.content = parseVisitor(post.content,userData);	
 		}
