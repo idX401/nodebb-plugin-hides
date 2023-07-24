@@ -96,12 +96,12 @@ plugin.alterContent = async function (params) {
 		}
 	}else{
 		let userData = await plugin.getUser(params.caller.uid);
+		console.log(params,'-3-',userData);
 		for (const post of params.posts) {
 			post.content = parseClub(post.content,userData);
 			post.content = parsePosts(post.content,userData);
 			post.content = parseVisitor(post.content,userData);	
 		}
-		console.log(params,'-3-',userData);
 	}
 	return params;
 };
