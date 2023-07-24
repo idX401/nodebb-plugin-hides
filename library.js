@@ -125,11 +125,11 @@ plugin.alterContent = async function (params) {
 	    if(text.search(useridsRegex) !== -1) {
 		    if (typeof user !== 'undefined'){
 			let hideData = text.match(useridsRegex)[0].match(/=(.+?)\]/gi)[0].replace(/=/,'').replace(/\]/,'').split(',');
-			console.log(hideData,' users');
+			console.log(hideData,' userids');
 			if(hideData.includes(user.uid.toString())){
-				return text.replace(useridsRegex, '<b>[Это сообщение всем кроме ограниченного числа лиц]</b>');
-			}else{
 				return text;
+			}else{
+				return text.replace(exceptidsRegex, '<b>[Это сообщение доступно ограниченному числу лиц]</b>');
 		    	}
 		    }else{
 			return text.replace(useridsRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
@@ -142,11 +142,11 @@ plugin.alterContent = async function (params) {
 	    if(text.search(exceptidsRegex) !== -1) {
 		    if (typeof user !== 'undefined'){
 			let hideData = text.match(exceptidsRegex)[0].match(/=(.+?)\]/gi)[0].replace(/=/,'').replace(/\]/,'').split(',');
-			console.log(hideData,' users');
+			console.log(hideData,' exceptids');
 			if(hideData.includes(user.uid.toString())){
-				return text;
+				return text.replace(useridsRegex, '<b>[Это сообщение всем кроме ограниченного числа лиц]</b>');
 			}else{
-				return text.replace(exceptidsRegex, '<b>[Это сообщение доступно ограниченному числу лиц]</b>');
+				return text;
 		    	}
 		    }else{
 			return text.replace(exceptidsRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
