@@ -90,16 +90,16 @@ plugin.alterContent = async function (params) {
 		for (const post of params.posts) {
 			post.content = parseLinkHref(post.content);
 			post.content = parseHide(post.content);
-			post.content = parseClub(post.content);
-			post.content = parsePosts(post.content);
+			//post.content = parseClub(post.content);
+			//post.content = parsePosts(post.content);
 			//post.content = parseVisitor(post.content);
 		}
 	}else{
 		let userData = await plugin.getUser(params.caller.uid);
 		console.log(params,'-3-',userData);
 		for (const post of params.posts) {
-			post.content = parseClub(post.content,userData);
-			post.content = parsePosts(post.content,userData);
+			//post.content = parseClub(post.content,userData);
+			//post.content = parsePosts(post.content,userData);
 			//post.content = parseVisitor(post.content,userData);	
 		}
 	}
