@@ -61,10 +61,10 @@ plugin.alterContent = async function (params) {
 			if(user.postcount >= parseInt(hideData[1])){
 				return text;
 			}else{
-				return text.replace(clubRegex, '<b>[Для просмотра вам необходимо иметь больше: '+hideData[1]+' сообщений]</b>');
+				return text.replace(postsRegex, '<b>[Для просмотра вам необходимо иметь больше: '+hideData[1]+' сообщений]</b>');
 		    	}
 		    }else{
-			return text.replace(clubRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+			return text.replace(postsRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
 		    }
 	    }
 	}
