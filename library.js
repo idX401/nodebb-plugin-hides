@@ -121,6 +121,40 @@ plugin.alterContent = async function (params) {
 	    	return text;
 	    }
 	}
+	function parseUserids(text, user) {
+	    if(text.search(exceptidsRegex) !== -1) {
+		    if (typeof user !== 'undefined'){
+			let hideData = text.match(exceptidsRegex)[0].match(/=(.+?)\]/gi)[0].replace(/=/,'').replace(/\]/,'').split(',');
+			console.log(hideData,' users');
+			if(hideData.includes(user.uid.toString())){
+				return text.replace(exceptidsRegex, '<b>[Это сообщение всем кроме ограниченного числа лиц]</b>');
+			}else{
+				return text;
+		    	}
+		    }else{
+			return text.replace(exceptidsRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+		    }
+	    }else{
+	    	return text;
+	    }
+	}
+	function parseExceptids(text, user) {
+	    if(text.search(useridsRegex) !== -1) {
+		    if (typeof user !== 'undefined'){
+			let hideData = text.match(useridsRegex)[0].match(/=(.+?)\]/gi)[0].replace(/=/,'').replace(/\]/,'').split(',');
+			console.log(hideData,' users');
+			if(hideData.includes(user.uid.toString())){
+				return text;
+			}else{
+				return text.replace(useridsRegex, '<b>[Это сообщение доступно ограниченному числу лиц]</b>');
+		    	}
+		    }else{
+			return text.replace(useridsRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+		    }
+	    }else{
+	    	return text;
+	    }
+	}
 	function parseVisitor(text, user) {
 	    if(text.search(visitorRegex) !== -1) {
 		    if (typeof user !== 'undefined'){
@@ -140,6 +174,8 @@ plugin.alterContent = async function (params) {
 			post.content = parseDays(post.content);
 			post.content = parseLikes(post.content);
 			post.content = parsePosts(post.content);
+			post.content = parseUserids(post.content);
+			post.content = parseExceptids(post.content);
 			post.content = parseVisitor(post.content);
 		}
 	}else{
@@ -150,6 +186,8 @@ plugin.alterContent = async function (params) {
 			post.content = parseDays(post.content,userData);
 			post.content = parseLikes(post.content,userData);
 			post.content = parsePosts(post.content,userData);
+			post.content = parseUserids(post.content,userData);
+			post.content = parseExceptids(post.content,userData));
 			post.content = parseVisitor(post.content,userData);	
 		}
 	}
