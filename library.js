@@ -54,6 +54,39 @@ plugin.alterContent = async function (params) {
 	function parseHide(text) {
 	    return text.replace(hideRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
 	}
+	function parseClub(text, user) {
+	    if(text.search(clubRegex) !== -1) {
+		    if (typeof user !== 'undefined'){
+			if(user.groupTitleArray.includes('administrators') || user.groupTitleArray.includes('Global Moderators')){
+				return text;
+			}else{
+				return text.replace(clubRegex, '<b>[Только администрация может просмотреть это сообщение]</b>');
+		    	}
+		    }else{
+			return text.replace(clubRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+		    }
+	    }else{
+	    	return text;
+	    }
+	}
+	function parseDays(text, user) {
+	    if(text.search(daysRegex) !== -1) {
+		    if (typeof user !== 'undefined'){
+			let hideData = text.match(daysRegex)[0].match(/\d+/gi)[0];
+			let userData = Math.ceil((new Date() - new Date(user.joindate)) / 86400_000)
+			console.log(hideData,' days');
+			if(userData >= parseInt(hideData)){
+				return text;
+			}else{
+				return text.replace(daysRegex, '<b>[Для просмотра вам необходимо быть зарегистрированным не менее: '+hideData+' дней назад]</b>');
+		    	}
+		    }else{
+			return text.replace(daysRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+		    }
+	    }else{
+	    	return text;
+	    }
+	}
 	function parseLikes(text, user) {
 	    if(text.search(likesRegex) !== -1) {
 		    if (typeof user !== 'undefined'){
@@ -88,21 +121,6 @@ plugin.alterContent = async function (params) {
 	    	return text;
 	    }
 	}
-	function parseClub(text, user) {
-	    if(text.search(clubRegex) !== -1) {
-		    if (typeof user !== 'undefined'){
-			if(user.groupTitleArray.includes('administrators') || user.groupTitleArray.includes('Global Moderators')){
-				return text;
-			}else{
-				return text.replace(clubRegex, '<b>[Только администрация может просмотреть это сообщение]</b>');
-		    	}
-		    }else{
-			return text.replace(clubRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
-		    }
-	    }else{
-	    	return text;
-	    }
-	}
 	function parseVisitor(text, user) {
 	    if(text.search(visitorRegex) !== -1) {
 		    if (typeof user !== 'undefined'){
@@ -119,6 +137,7 @@ plugin.alterContent = async function (params) {
 			post.content = parseLinkHref(post.content);
 			post.content = parseHide(post.content);
 			post.content = parseClub(post.content);
+			post.content = parseDays(post.content);
 			post.content = parseLikes(post.content);
 			post.content = parsePosts(post.content);
 			post.content = parseVisitor(post.content);
@@ -128,6 +147,7 @@ plugin.alterContent = async function (params) {
 		console.log(params,'-3-',userData);
 		for (const post of params.posts) {
 			post.content = parseClub(post.content,userData);
+			post.content = parseDays(post.content,userData);
 			post.content = parseLikes(post.content,userData);
 			post.content = parsePosts(post.content,userData);
 			post.content = parseVisitor(post.content,userData);	
