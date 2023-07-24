@@ -187,7 +187,7 @@ plugin.alterContent = async function (params) {
 			post.content = parseLikes(post.content,userData);
 			post.content = parsePosts(post.content,userData);
 			post.content = parseUserids(post.content,userData);
-			post.content = parseExceptids(post.content,userData));
+			post.content = parseExceptids(post.content,userData);
 			post.content = parseVisitor(post.content,userData);	
 		}
 	}
