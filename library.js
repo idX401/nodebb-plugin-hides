@@ -54,7 +54,7 @@ plugin.alterContent = async function (params) {
 	    return text.replace(hideRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
 	}
 	function parseClub(text, user) {
-	    if (typeof user.username !== 'undefined'){
+	    if (typeof user !== 'undefined'){
 		if(user.groupTitleArray.includes('administrators') || user.groupTitleArray.includes('Global Moderators')){
 			return text;
 		}
@@ -63,7 +63,7 @@ plugin.alterContent = async function (params) {
 	    }
 	}
 	function parseVisitor(text, user) {
-	    if (typeof user.username !== 'undefined'){
+	    if (typeof user !== 'undefined'){
 		return text.replace(visitorRegex, user.username);
 	    }else{
 	    	return text.replace(visitorRegex, 'гость');
