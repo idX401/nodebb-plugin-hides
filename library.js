@@ -54,6 +54,23 @@ plugin.alterContent = async function (params) {
 	function parseHide(text) {
 	    return text.replace(hideRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
 	}
+	function parseLikes(text, user) {
+	    if(text.search(likesRegex) !== -1) {
+		    if (typeof user !== 'undefined'){
+			let hideData = text.match(likesRegex)[0].match(/\d+/gi)[0];
+			console.log(hideData,' posts');
+			if(user.reputation >= parseInt(hideData)){
+				return text;
+			}else{
+				return text.replace(likesRegex, '<b>[Для просмотра вам необходимо иметь больше: '+hideData+' репутации]</b>');
+		    	}
+		    }else{
+			return text.replace(likesRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+		    }
+	    }else{
+	    	return text;
+	    }
+	}
 	function parsePosts(text, user) {
 	    if(text.search(postsRegex) !== -1) {
 		    if (typeof user !== 'undefined'){
@@ -102,6 +119,7 @@ plugin.alterContent = async function (params) {
 			post.content = parseLinkHref(post.content);
 			post.content = parseHide(post.content);
 			post.content = parseClub(post.content);
+			post.content = parseLikes(post.content);
 			post.content = parsePosts(post.content);
 			post.content = parseVisitor(post.content);
 		}
@@ -110,6 +128,7 @@ plugin.alterContent = async function (params) {
 		console.log(params,'-3-',userData);
 		for (const post of params.posts) {
 			post.content = parseClub(post.content,userData);
+			post.content = parseLikes(post.content);
 			post.content = parsePosts(post.content,userData);
 			post.content = parseVisitor(post.content,userData);	
 		}
