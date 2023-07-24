@@ -58,7 +58,7 @@ plugin.alterContent = async function (params) {
 	    if(text.search(likesRegex) !== -1) {
 		    if (typeof user !== 'undefined'){
 			let hideData = text.match(likesRegex)[0].match(/\d+/gi)[0];
-			console.log(hideData,' posts');
+			console.log(hideData,' likes');
 			if(user.reputation >= parseInt(hideData)){
 				return text;
 			}else{
