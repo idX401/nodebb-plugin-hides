@@ -34,6 +34,7 @@ const hideRegex = /\[hide\]([^[]*(?:\[(?!hide\]|\/hide\])[^[]*)*)\[\/hide\]/gi;
 const clubRegex = /\[club\]([^[]*(?:\[(?!club\]|\/club\])[^[]*)*)\[\/club\]/gi;
 const daysRegex = /\[days=(.+?)\]([^[]*(?:\[(?!days=.+\]|\/days\])[^[]*)*)\[\/days\]/gi;
 const likesRegex = /\[likes=(.+?)\]([^[]*(?:\[(?!likes=.+\]|\/likes\])[^[]*)*)\[\/likes\]/gi;
+const postsRegex = /\[posts=(.+?)\]([^[]*(?:\[(?!posts=.+\]|\/posts\])[^[]*)*)\[\/posts\]/gi;
 const useridsRegex = /\[userids=(.+?)\]([^[]*(?:\[(?!userids=.+\]|\/userids\])[^[]*)*)\[\/userids\]/gi;
 const exceptidsRegex = /\[exceptids=(.+?)\]([^[]*(?:\[(?!exceptids=.+\]|\/exceptids\])[^[]*)*)\[\/exceptids\]/gi;
 const visitorRegex = /\[visitor\]([^[]*(?:\[(?!visitor\]|\/visitor\])[^[]*)*)\[\/visitor\]/gi;
@@ -53,6 +54,18 @@ plugin.alterContent = async function (params) {
 	function parseHide(text) {
 	    return text.replace(hideRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
 	}
+	function parsePosts(text, user) {
+	    if (typeof user !== 'undefined'){
+		let hideData = postsRegex.exec(text);
+		if(user.postcount >= parseInt(hideData[1])){
+			return text;
+		}else{
+			return text.replace(clubRegex, '<b>[Для просмотра вам необходимо иметь больше: '+hideData[1]+' сообщений]</b>');
+	    	}
+	    }else{
+		return text.replace(clubRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+	    }
+	}
 	function parseClub(text, user) {
 	    if (typeof user !== 'undefined'){
 		if(user.groupTitleArray.includes('administrators') || user.groupTitleArray.includes('Global Moderators')){
@@ -61,7 +74,7 @@ plugin.alterContent = async function (params) {
 			return text.replace(clubRegex, '<b>[Только администрация может просмотреть это сообщение]</b>');
 	    	}
 	    }else{
-		return text.replace(clubRegex, '<b>[Только администрация может просмотреть это сообщение]</b>');
+		return text.replace(clubRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
 	    }
 	}
 	function parseVisitor(text, user) {
@@ -84,7 +97,7 @@ plugin.alterContent = async function (params) {
 			post.content = parseClub(post.content,userData);
 			post.content = parseVisitor(post.content,userData);
 		}
-		//console.log(params,'-3-',userData);
+		console.log(params,'-3-',userData);
 	}
 	return params;
 };
