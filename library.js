@@ -55,7 +55,7 @@ plugin.alterContent = async function (params) {
 	    return text.replace(hideRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
 	}
 	function parsePosts(text, user) {
-	    while(text.search(postsRegex) !== -1) {
+	    if(text.search(postsRegex) !== -1) {
 		    if (typeof user !== 'undefined'){
 			let hideData = postsRegex.exec(text);
 			if(user.postcount >= parseInt(hideData[1])){
@@ -66,42 +66,50 @@ plugin.alterContent = async function (params) {
 		    }else{
 			return text.replace(postsRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
 		    }
+	    }else{
+	    	return text;
 	    }
 	}
 	function parseClub(text, user) {
-	    if (typeof user !== 'undefined'){
-		if(user.groupTitleArray.includes('administrators') || user.groupTitleArray.includes('Global Moderators')){
-			return text;
-		}else{
-			return text.replace(clubRegex, '<b>[Только администрация может просмотреть это сообщение]</b>');
-	    	}
+	    if(text.search(clubRegex) !== -1) {
+		    if (typeof user !== 'undefined'){
+			if(user.groupTitleArray.includes('administrators') || user.groupTitleArray.includes('Global Moderators')){
+				return text;
+			}else{
+				return text.replace(clubRegex, '<b>[Только администрация может просмотреть это сообщение]</b>');
+		    	}
+		    }else{
+			return text.replace(clubRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+		    }
 	    }else{
-		return text.replace(clubRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+	    	return text;
 	    }
 	}
 	function parseVisitor(text, user) {
-	    while(text.search(visitorRegex) !== -1) {
+	    if(text.search(visitorRegex) !== -1) {
 		    if (typeof user !== 'undefined'){
 			return text.replace(visitorRegex, user.username);
 		    }else{
 		    	return text.replace(visitorRegex, 'гость');
 		    }
+	    }else{
+	    	return text;
 	    }
 	}
 	if (!params.caller.uid) {
 		for (const post of params.posts) {
 			post.content = parseLinkHref(post.content);
 			post.content = parseHide(post.content);
-			//post.content = parseClub(post.content);
-			//post.content = parsePosts(post.content);
+			post.content = parseClub(post.content);
+			post.content = parsePosts(post.content);
 			post.content = parseVisitor(post.content);
 		}
 	}else{
 		let userData = await plugin.getUser(params.caller.uid);
 		console.log(params,'-3-',userData);
 		for (const post of params.posts) {
-			//post.content = parseClub(post.content,userData);
-			//post.content = parsePosts(post.content,userData);
+			post.content = parseClub(post.content,userData);
+			post.content = parsePosts(post.content,userData);
 			post.content = parseVisitor(post.content,userData);	
 		}
 	}
