@@ -59,10 +59,10 @@ plugin.alterContent = async function (params) {
 		    if (typeof user !== 'undefined'){
 			let hideData = text.match(postsRegex)[0].match(/\d+/gi)[0];
 			console.log(hideData,' posts');
-			if(user.postcount >= parseInt(hideData[1])){
+			if(user.postcount >= parseInt(hideData)){
 				return text;
 			}else{
-				return text.replace(postsRegex, '<b>[Для просмотра вам необходимо иметь больше: '+hideData[1]+' сообщений]</b>');
+				return text.replace(postsRegex, '<b>[Для просмотра вам необходимо иметь больше: '+hideData+' сообщений]</b>');
 		    	}
 		    }else{
 			return text.replace(postsRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
