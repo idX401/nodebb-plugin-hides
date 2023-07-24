@@ -61,7 +61,7 @@ plugin.alterContent = async function (params) {
 	    }
 	}
 	function parseVisitor(text, user) {
-	    if (typeof myVar !== 'undefined'){
+	    if (typeof user.username !== 'undefined'){
 		return text.replace(visitorRegex, user.username);
 	    }else{
 	    	return text.replace(visitorRegex, 'гость');
