@@ -80,10 +80,12 @@ plugin.alterContent = async function (params) {
 	    }
 	}
 	function parseVisitor(text, user) {
-	    if (typeof user !== 'undefined'){
-		return text.replace(visitorRegex, user.username);
-	    }else{
-	    	return text.replace(visitorRegex, 'гость');
+	    while(text.search(visitorRegex) !== -1) {
+		    if (typeof user !== 'undefined'){
+			return text.replace(visitorRegex, user.username);
+		    }else{
+		    	return text.replace(visitorRegex, 'гость');
+		    }
 	    }
 	}
 	if (!params.caller.uid) {
@@ -92,7 +94,7 @@ plugin.alterContent = async function (params) {
 			post.content = parseHide(post.content);
 			//post.content = parseClub(post.content);
 			//post.content = parsePosts(post.content);
-			//post.content = parseVisitor(post.content);
+			post.content = parseVisitor(post.content);
 		}
 	}else{
 		let userData = await plugin.getUser(params.caller.uid);
@@ -100,7 +102,7 @@ plugin.alterContent = async function (params) {
 		for (const post of params.posts) {
 			//post.content = parseClub(post.content,userData);
 			//post.content = parsePosts(post.content,userData);
-			//post.content = parseVisitor(post.content,userData);	
+			post.content = parseVisitor(post.content,userData);	
 		}
 	}
 	return params;
