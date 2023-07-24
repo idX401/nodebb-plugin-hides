@@ -174,8 +174,8 @@ plugin.alterContent = async function (params) {
 			post.content = parseDays(post.content);
 			post.content = parseLikes(post.content);
 			post.content = parsePosts(post.content);
-			post.content = parseUserids(post.content);
-			post.content = parseExceptids(post.content);
+			//post.content = parseUserids(post.content);
+			//post.content = parseExceptids(post.content);
 			post.content = parseVisitor(post.content);
 		}
 	}else{
@@ -186,8 +186,8 @@ plugin.alterContent = async function (params) {
 			post.content = parseDays(post.content,userData);
 			post.content = parseLikes(post.content,userData);
 			post.content = parsePosts(post.content,userData);
-			post.content = parseUserids(post.content,userData);
-			post.content = parseExceptids(post.content,userData));
+			//post.content = parseUserids(post.content,userData);
+			//post.content = parseExceptids(post.content,userData));
 			post.content = parseVisitor(post.content,userData);	
 		}
 	}
