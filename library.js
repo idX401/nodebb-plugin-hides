@@ -57,7 +57,9 @@ plugin.alterContent = async function (params) {
 	    if (typeof user !== 'undefined'){
 		if(user.groupTitleArray.includes('administrators') || user.groupTitleArray.includes('Global Moderators')){
 			return text;
-		}
+		}else{
+			return text.replace(clubRegex, '<b>[Только администрация может просмотреть это сообщение]</b>');
+	    	}
 	    }else{
 		return text.replace(clubRegex, '<b>[Только администрация может просмотреть это сообщение]</b>');
 	    }
