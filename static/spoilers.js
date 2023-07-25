@@ -21,12 +21,12 @@ $('document').ready(function() {
                 controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionEnd + 11 + spoilersTitle.length);
             }
         });
-        composer.addDropdown ({
+        composer.addDropdown({
             'iconClass': 'fa fa-gear',
             'title': 'text seti',
             'dropdownItems': [
                 {
-                    'name': 'Bold'
+                    'name': 'Bold',
                     'onClick': function(textarea, selectionStart, selectionEnd) {
                                 let example = '[B]\nBold text\n[/B]'
                                 if(selectionStart === selectionEnd){
@@ -39,7 +39,7 @@ $('document').ready(function() {
                             }
                 },
                 {
-                    'name': 'Italic'
+                    'name': 'Italic',
                     'onClick': function(textarea, selectionStart, selectionEnd) {
                                 let example = '[I]\nItalic text\n[/I]'
                                 if(selectionStart === selectionEnd){
