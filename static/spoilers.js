@@ -11,6 +11,30 @@ $('document').ready(function() {
                 controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionEnd + 11 + spoilersTitle.length);
             }
         });
+        composer.addDropdown ({"iconClass": 'gear', "title": 'test', "dropdownItems":
+            [
+             {"name": 'Bold', "onClick": function(textarea, selectionStart, selectionEnd) {
+                    let example = '[B]\nBold text\n[/B]'
+                    if(selectionStart === selectionEnd){
+                        controls.insertIntoTextarea(textarea, example);
+                        controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionStart + 11 + spoilersTitle.length);
+                    } else {
+                        controls.wrapSelectionInTextareaWith(textarea, example);
+                        controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionEnd + 11 + spoilersTitle.length);
+                    }
+                },
+              {"name": 'Italic', "onClick": function(textarea, selectionStart, selectionEnd) {
+                    let example = '[I]\nItalic text\n[/I]'
+                    if(selectionStart === selectionEnd){
+                        controls.insertIntoTextarea(textarea, example);
+                        controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionStart + 11 + spoilersTitle.length);
+                    } else {
+                        controls.wrapSelectionInTextareaWith(textarea, example);
+                        controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionEnd + 11 + spoilersTitle.length);
+                    }
+                }
+            ]
+            }}, );
     });
 
     $('body').on('click', 'div.show-spoiler', function(){
