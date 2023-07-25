@@ -7,7 +7,7 @@ $('document').ready(function() {
                 controls.insertIntoTextarea(textarea, example);
                 controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionStart + 11 + spoilersTitle.length);
             } else {
-                controls.wrapSelectionInTextareaWith(textarea, example);
+                controls.wrapSelectionInTextareaWith(textarea, '[SPOILER="Title"]','[/SPOILER]');
                 controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionEnd + 11 + spoilersTitle.length);
             }
         });
@@ -17,7 +17,7 @@ $('document').ready(function() {
                 controls.insertIntoTextarea(textarea, example);
                 controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionStart + 11 + spoilersTitle.length);
             } else {
-                controls.wrapSelectionInTextareaWith(textarea, example);
+                controls.wrapSelectionInTextareaWith(textarea, '[B]','[/B]');
                 controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionEnd + 11 + spoilersTitle.length);
             }
         });
