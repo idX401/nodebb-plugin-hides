@@ -11,8 +11,7 @@ $('document').ready(function() {
                 controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionEnd + 11 + spoilersTitle.length);
             }
         });
-        composer.addButton('bold', function(textarea, selectionStart, selectionEnd) {
-
+        composer.addButton('fa fa-bold', function(textarea, selectionStart, selectionEnd) {
             let example = '[B]\nBold text\n[/B]'
             if(selectionStart === selectionEnd){
                 controls.insertIntoTextarea(textarea, example);
@@ -21,6 +20,38 @@ $('document').ready(function() {
                 controls.wrapSelectionInTextareaWith(textarea, example);
                 controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionEnd + 11 + spoilersTitle.length);
             }
+        });
+        composer.addDropdown ({
+            'iconClass': 'fa fa-gear',
+            'title': 'text seti',
+            'dropdownItems': [
+                {
+                    'name': 'Bold'
+                    'onClick': function(textarea, selectionStart, selectionEnd) {
+                                let example = '[B]\nBold text\n[/B]'
+                                if(selectionStart === selectionEnd){
+                                    controls.insertIntoTextarea(textarea, example);
+                                    controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionStart + 11 + spoilersTitle.length);
+                                } else {
+                                    controls.wrapSelectionInTextareaWith(textarea, example);
+                                    controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionEnd + 11 + spoilersTitle.length);
+                                }
+                            }
+                },
+                {
+                    'name': 'Italic'
+                    'onClick': function(textarea, selectionStart, selectionEnd) {
+                                let example = '[I]\nItalic text\n[/I]'
+                                if(selectionStart === selectionEnd){
+                                    controls.insertIntoTextarea(textarea, example);
+                                    controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionStart + 11 + spoilersTitle.length);
+                                } else {
+                                    controls.wrapSelectionInTextareaWith(textarea, example);
+                                    controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionEnd + 11 + spoilersTitle.length);
+                                }
+                            }
+                }
+            ]
         });
     });
 
