@@ -21,43 +21,25 @@ $('document').ready(function() {
                 controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionEnd + 11 + spoilersTitle.length);
             }
         }, 'strong text', 'Bold');
+        function fn(textarea, selectionStart, selectionEnd) {
+            let example = '[B]\nBold text\n[/B]'
+            if(selectionStart === selectionEnd){
+                controls.insertIntoTextarea(textarea, example);
+                controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionStart + 11 + spoilersTitle.length);
+            } else {
+                controls.wrapSelectionInTextareaWith(textarea, '[B]','[/B]');
+                controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionEnd + 11 + spoilersTitle.length);
+            }
+        }
         composer.addDropdown({
-            'iconClass': 'fa fa-gear',
-            'title': 'text seti',
-            'dropdownItems': [
-                {
-                    'iconClass': 'fa fa-gear',
-                    'title': 'text 1',
-                    'name': 'Bold',
-                    'onClick': function(textarea, selectionStart, selectionEnd) {
-                                let example = '[B]\nBold text\n[/B]'
-                                if(selectionStart === selectionEnd){
-                                    controls.insertIntoTextarea(textarea, example);
-                                    controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionStart + 11 + spoilersTitle.length);
-                                } else {
-                                    controls.wrapSelectionInTextareaWith(textarea, example);
-                                    controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionEnd + 11 + spoilersTitle.length);
-                                }
-                            }
-                },
-                {
-                    'iconClass': 'fa fa-gear',
-                    'title': 'text 2',
-                    'name': 'Italic',
-                    'onClick': function(textarea, selectionStart, selectionEnd) {
-                                let example = '[I]\nItalic text\n[/I]'
-                                if(selectionStart === selectionEnd){
-                                    controls.insertIntoTextarea(textarea, example);
-                                    controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionStart + 11 + spoilersTitle.length);
-                                } else {
-                                    controls.wrapSelectionInTextareaWith(textarea, example);
-                                    controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionEnd + 11 + spoilersTitle.length);
-                                }
-                            }
-                }
-            ]
+        		iconClass: 'fa fa-gear',
+        		title: 'formatting options',
+        		dropdownItems: [
+        			{ name: 'bold', className: 'fa fa-bold', text: '[[modules:composer.formatting.bold]]', onClick: fn },
+        			{ name: 'italic', className: 'fa fa-italic', text: '[[modules:composer.formatting.italic]]', onClick: fn },
+        		],
+        	},
         });
-    });
 
     $('body').on('click', 'div.show-spoiler', function(){
         $(this).find('.fa').toggleClass('fa-eye');
