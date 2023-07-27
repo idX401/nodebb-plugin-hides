@@ -35,8 +35,8 @@ $('document').ready(function() {
         		iconClass: 'fa fa-gear',
         		title: 'formatting options',
         		dropdownItems: [
-        			{ name: 'bold', className: 'fa fa-bold', text: '[[modules:composer.formatting.bold]]', onClick: fn },
-        			{ name: 'italic', className: 'fa fa-italic', text: '[[modules:composer.formatting.italic]]', onClick: fn },
+        			{ name: 'bold', className: 'fa fa-bold', text: 'Bold', onClick: fn },
+        			{ name: 'italic', className: 'fa fa-italic', text: 'Italic', onClick: fn },
         		],
         	},
         });
