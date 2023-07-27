@@ -26,6 +26,8 @@ $('document').ready(function() {
             'title': 'text seti',
             'dropdownItems': [
                 {
+                    'iconClass': 'fa fa-gear',
+                    'title': 'text 1',
                     'name': 'Bold',
                     'onClick': function(textarea, selectionStart, selectionEnd) {
                                 let example = '[B]\nBold text\n[/B]'
@@ -39,6 +41,8 @@ $('document').ready(function() {
                             }
                 },
                 {
+                    'iconClass': 'fa fa-gear',
+                    'title': 'text 2',
                     'name': 'Italic',
                     'onClick': function(textarea, selectionStart, selectionEnd) {
                                 let example = '[I]\nItalic text\n[/I]'
