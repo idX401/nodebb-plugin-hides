@@ -20,7 +20,7 @@ $('document').ready(function() {
                 controls.wrapSelectionInTextareaWith(textarea, '[B]','[/B]');
                 controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionEnd + 11 + spoilersTitle.length);
             }
-        });
+        }, 'strong text', 'Bold');
         composer.addDropdown({
             'iconClass': 'fa fa-gear',
             'title': 'text seti',
