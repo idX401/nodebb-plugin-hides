@@ -31,6 +31,7 @@ $('document').ready(function() {
                 controls.updateTextareaSelection(textarea, selectionStart + 11 + spoilersTitle.length, selectionEnd + 11 + spoilersTitle.length);
             }
         }
+
         composer.addDropdown({
         		iconClass: 'fa fa-gear',
         		title: 'formatting options',
@@ -38,8 +39,7 @@ $('document').ready(function() {
         			{ name: 'bold', className: 'fa fa-bold', text: 'Bold', onClick: fn },
         			{ name: 'italic', className: 'fa fa-italic', text: 'Italic', onClick: fn },
         		],
-        	},
-        });
+        	});
 
     $('body').on('click', 'div.show-spoiler', function(){
         $(this).find('.fa').toggleClass('fa-eye');
