@@ -357,7 +357,7 @@ plugin.parseContent = function(data, callback) {
 	if ('string' === typeof data) {
 		//data = parseLinks(data);
 		//data = '<p dir="auto">'+data+'<p>';
-		data = parseP(data);
+		//data = parseP(data);
 		data = parseBolt(data);
 		data = parseItalic(data);
 		data = parseUnderline(data);
@@ -385,7 +385,7 @@ plugin.parseContent = function(data, callback) {
 	} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
 		//data.postData.content = parseLinks(data.postData.content);
 		//data.postData.content = '<p dir="auto">'+data.postData.content+'<p>';
-		data.postData.content = parseP(data.postData.content);
+		//data.postData.content = parseP(data.postData.content);
 		data.postData.content = parseBolt(data.postData.content);
 		data.postData.content = parseItalic(data.postData.content);
 		data.postData.content = parseUnderline(data.postData.content);
@@ -413,7 +413,7 @@ plugin.parseContent = function(data, callback) {
 	} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
 		//data.userData.signature = parseLinks(data.userData.signature);
 		//data.userData.signature = '<p dir="auto">'+data.userData.signature+'<p>';
-		data.userData.signature = parseP(data.userData.signature);
+		//data.userData.signature = parseP(data.userData.signature);
 		data.userData.signature = parseBolt(data.userData.signature);
 		data.userData.signature = parseItalic(data.userData.signature);
 		data.userData.signature = parseUnderline(data.userData.signature);
