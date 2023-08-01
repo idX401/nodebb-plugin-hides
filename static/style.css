@@ -42,3 +42,42 @@ span.blur-text:hover {
     text-shadow: 0 0 transparent;
 	cursor: pointer;
 }
+
+.bbCodeInline {
+  margin: 0;
+    margin-top: 0px;
+  font-size: 90%;
+  background: #42464d;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  padding-top: 1px;
+  padding-right: 4px;
+  padding-bottom: 1px;
+  padding-left: 4px;
+  font-family: Monaco,Menlo,Consolas,'Roboto Mono','Andale Mono','Ubuntu Mono',monospace;
+  line-height: 1.4;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  white-space: pre-wrap;
+}
+
+.bbCodeBlock {
+  display: flow-root;
+  margin: .5em 0;
+  background: #42464d;
+  border: 1px solid rgba(255,255,255,0.12);
+    border-left-color: rgba(255, 255, 255, 0.12);
+    border-left-style: solid;
+    border-left-width: 1px;
+  border-left: 2px solid #2196f3;
+}
+.bbCodeBlock-title {
+  padding: 12px 15px;
+  font-size: 1.2rem;
+  color: #92d049;
+  background: #3d4148;
+}
+.bbCodeBlock-content {
+  position: relative;
+  padding: 12px 15px;
+}
