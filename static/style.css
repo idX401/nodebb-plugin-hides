@@ -42,7 +42,7 @@ span.blur-text:hover {
     text-shadow: 0 0 transparent;
 	cursor: pointer;
 }
-
+/* ICODE */
 .bbCodeInline {
   margin: 0;
     margin-top: 0px;
@@ -60,7 +60,7 @@ span.blur-text:hover {
   -webkit-box-decoration-break: clone;
   white-space: pre-wrap;
 }
-
+/* HIDE */
 .bbCodeBlock {
   display: flow-root;
   margin: .5em 0;
@@ -80,4 +80,22 @@ span.blur-text:hover {
 .bbCodeBlock-content {
   position: relative;
   padding: 12px 15px;
+}
+/* COLORPICKER */
+.fr-popup .fr-color-set > span {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  position: relative;
+  z-index: 1;
+}
+span.fr-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
