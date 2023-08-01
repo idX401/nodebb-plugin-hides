@@ -77,9 +77,9 @@ plugin.alterContent = async function (params) {
 			let userData = Math.ceil((new Date() - new Date(user.joindate)) / 86400_000)
 			console.log(hideData,' days');
 			if(userData >= parseInt(hideData)){
-				return text;
+				return text.replace(daysRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для просмотра Вам необходимо провести не менее $1 дней на форуме.</div><div class="bbCodeBlock-content">$2</div></div>');
 			}else{
-				return text.replace(daysRegex, '<b>[Для просмотра вам необходимо быть зарегистрированным не менее: '+hideData+' дней назад]</b>');
+				return text.replace(daysRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для просмотра Вам необходимо провести не менее '+hideData+' дней на форуме.</div></div>');
 		    	}
 		    }else{
 			return text.replace(daysRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
