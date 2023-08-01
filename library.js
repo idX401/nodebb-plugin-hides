@@ -28,6 +28,7 @@ const spoilerFixRegex = /\[spoiler=\"(.+?)\"\]/gi;
 const spoilerRegex = /\[spoiler\]([^[]*(?:\[(?!spoiler\]|\/spoiler\])[^[]*)*)\[\/spoiler\]/gi;
 const spoilerCustomRegex = /\[spoiler=(.+?)\]([^[]*(?:\[(?!spoiler=.+\]|\/spoiler\])[^[]*)*)\[\/spoiler\]/gi;
 //code
+const icodeRegex = /\[icode\]([^[]*(?:\[(?!icode\]|\/icode\])[^[]*)*)\[\/icode\]/gi;
 //table
 
 const hideRegex = /\[hide\]([^[]*(?:\[(?!hide\]|\/hide\])[^[]*)*)\[\/hide\]/gi;
@@ -207,7 +208,7 @@ plugin.parseContent = function(data, callback) {
 	}
  	*/
 	function parseP(text){
-	    return text.replace(/(.+)\n\n/gi,'<p dir="auto">$1</p>');
+	    return text.replace(/\n(.+)\n/gi,'<p dir="auto">$1</p>\n');
 	}
 	function parseBolt(text) {
 	    while(text.search(boltRegex) !== -1) {
@@ -354,9 +355,13 @@ plugin.parseContent = function(data, callback) {
 	    }
 	    return text;
 	}
+	function parseIcode(text) {
+	    while(text.search(icodeRegex) !== -1) {
+	        text = text.replace(icodeRegex, '<code class="bbCodeInline">$1</code>');
+	    }
+	    return text;
+	}
 	if ('string' === typeof data) {
-		//data = parseLinks(data);
-		//data = '<p dir="auto">'+data+'<p>';
 		data = parseP(data);
 		data = parseBolt(data);
 		data = parseItalic(data);
@@ -382,9 +387,8 @@ plugin.parseContent = function(data, callback) {
 		data = parseSpoilerFix(data);
 		data = parseSpoiler(data);
 		data = parseSpoilerCustom(data);
+		data = parseIcode(data);
 	} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
-		//data.postData.content = parseLinks(data.postData.content);
-		//data.postData.content = '<p dir="auto">'+data.postData.content+'<p>';
 		data.postData.content = parseP(data.postData.content);
 		data.postData.content = parseBolt(data.postData.content);
 		data.postData.content = parseItalic(data.postData.content);
@@ -410,9 +414,8 @@ plugin.parseContent = function(data, callback) {
 		data.postData.content = parseSpoilerFix(data.postData.content);
 		data.postData.content = parseSpoiler(data.postData.content);
 		data.postData.content = parseSpoilerCustom(data.postData.content);
+		data.postData.content = parseIcode(data.postData.content);
 	} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
-		//data.userData.signature = parseLinks(data.userData.signature);
-		//data.userData.signature = '<p dir="auto">'+data.userData.signature+'<p>';
 		data.userData.signature = parseP(data.userData.signature);
 		data.userData.signature = parseBolt(data.userData.signature);
 		data.userData.signature = parseItalic(data.userData.signature);
@@ -438,6 +441,7 @@ plugin.parseContent = function(data, callback) {
 		data.userData.signature = parseSpoilerFix(data.userData.signature);
 		data.userData.signature = parseSpoiler(data.userData.signature);
 		data.userData.signature = parseSpoilerCustom(data.userData.signature);
+		data.userData.signature = parseIcode(data.userData.signature);
 	}
 	callback(null, data);
 };
