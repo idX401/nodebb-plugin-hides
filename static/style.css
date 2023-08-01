@@ -99,3 +99,19 @@ span.fr-sr-only {
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+.fr-command.fr-btn + .fr-dropdown-menu > .fr-dropdown-wrapper > .fr-dropdown-content, .fr-popup {
+  color: #fff;
+  background: rgb(39, 39, 39);
+  border-radius: 6px;
+  border: 1px solid rgb(54,54,54);
+}
+.fr-popup .fr-color-set {
+  line-height: 0;
+  display: none;
+}
+.fr-popup .fr-color-set.fr-selected-set {
+  display: block;
+  padding: 20px;
+    padding-bottom: 20px;
+  padding-bottom: 0;
+}
