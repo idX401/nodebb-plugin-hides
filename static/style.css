@@ -73,7 +73,7 @@ span.blur-text:hover {
 }
 .bbCodeBlock-title {
   padding: 10px 12px;
-  font-size: 1.2rem;
+  /*font-size: 1.2rem;*/
   color: #92d049;
   background: #3d4148;
 }
