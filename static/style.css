@@ -69,17 +69,17 @@ span.blur-text:hover {
     border-left-color: rgba(255, 255, 255, 0.12);
     border-left-style: solid;
     border-left-width: 1px;
-  border-left: 2px solid #2196f3;
+  border-left: 3px solid var(--bs-blockquote-border) !important
 }
 .bbCodeBlock-title {
-  padding: 12px 15px;
+  padding: 10px 12px;
   font-size: 1.2rem;
   color: #92d049;
   background: #3d4148;
 }
 .bbCodeBlock-content {
   position: relative;
-  padding: 12px 15px;
+  padding: 10px 12px;
 }
 /* COLORPICKER */
 .fr-popup .fr-color-set > span {
