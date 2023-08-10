@@ -204,7 +204,7 @@ plugin.parseContent = function(data, callback) {
 	
 	/*
 	function parseLinks(text) {
-	    while(text.search(linkRegex) !== -1) {
+	    while(text.search() !== -1) {
 	        text = text.replace(linkRegex, '<a href="$1" target="_blank" class="externalLink" rel="nofollow">$1</a>');
 	    }
 	    return text;
