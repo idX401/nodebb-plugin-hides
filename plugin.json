@@ -8,7 +8,7 @@
   "defaultLang": "ru",
   "staticDirs": {"static": "./static"},
   "css": [ "./static/style.css" ],
-  "scripts": [ "./static/spoilers.js" ],
+  "scripts": [ "./static/client.js" ],
   "hooks": [
       { "hook": "filter:post.getPosts", "method": "alterContent" },
 	    { "hook": "filter:parse.post", "method": "parseContent" },
