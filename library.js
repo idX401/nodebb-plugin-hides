@@ -55,7 +55,7 @@ plugin.alterContent = async function (params) {
 	function parseHide(text, user) {
 	    if(text.search(hideRegex) !== -1) {
 		    if (typeof user !== 'undefined'){
-			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для администрации.</div><div class="bbCodeBlock-content">$1</div></div>');
+			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое для авторизованных пользователей.</div><div class="bbCodeBlock-content">$1</div></div>');
 		    }else{
 			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Вам необходимо <a href="/login" class="hide-to-guest">авторизоваться</a>, чтобы просмотреть содержимое.</div></div>');
 		    }
