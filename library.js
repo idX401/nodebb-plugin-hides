@@ -50,14 +50,14 @@ plugin.alterContent = async function (params) {
 	//post.content = post.content.replace(boltRegex, "<strong>$1</strong>");
 	//hide links for guest
 	function parseLinkHref(text) {
-	    return text.replace(linkHrefRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+	    return text.replace(linkHrefRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-link]]</div></div>');
 	}
 	function parseHide(text, user) {
 	    if(text.search(hideRegex) !== -1) {
 		    if (typeof user !== 'undefined'){
-			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое для авторизованных пользователей.</div><div class="bbCodeBlock-content">$1</div></div>');
+			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-inactive]]</div><div class="bbCodeBlock-content">$1</div></div>');
 		    }else{
-			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Вам необходимо <a href="/login" class="hide-to-guest">авторизоваться</a>, чтобы просмотреть содержимое.</div></div>');
+			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
 		    }
 	    }else{
 	    	return text;
@@ -72,7 +72,7 @@ plugin.alterContent = async function (params) {
 				return text.replace(clubRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для администрации.</div></div>');
 		    	}
 		    }else{
-			return text.replace(clubRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
 		    }
 	    }else{
 	    	return text;
@@ -90,7 +90,7 @@ plugin.alterContent = async function (params) {
 				return text.replace(daysRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для просмотра Вам необходимо провести не менее $1 дней на форуме.</div></div>');
 		    	}
 		    }else{
-			return text.replace(daysRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
 		    }
 	    }else{
 	    	return text;
@@ -107,7 +107,7 @@ plugin.alterContent = async function (params) {
 				return text.replace(likesRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для просмотра Вам необходимо иметь не менее $1 репутации на форуме.</div></div>');
 		    	}
 		    }else{
-			return text.replace(likesRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
 		    }
 	    }else{
 	    	return text;
@@ -124,7 +124,7 @@ plugin.alterContent = async function (params) {
 				return text.replace(postsRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для просмотра Вам необходимо иметь не менее $1 сообщений на форуме.</div></div>');
 		    	}
 		    }else{
-			return text.replace(postsRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
 		    }
 	    }else{
 	    	return text;
@@ -141,7 +141,7 @@ plugin.alterContent = async function (params) {
 				return text.replace(useridsRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для определенных пользователей.</div></div>');
 		    	}
 		    }else{
-			return text.replace(useridsRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
 		    }
 	    }else{
 	    	return text;
@@ -158,7 +158,7 @@ plugin.alterContent = async function (params) {
 				return text.replace(exceptidsRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для всех, кроме определенных пользователей.</div><div class="bbCodeBlock-content">$2</div></div>');
 		    	}
 		    }else{
-			return text.replace(exceptidsRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
 		    }
 	    }else{
 	    	return text;
