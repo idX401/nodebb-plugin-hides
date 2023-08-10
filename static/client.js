@@ -40,16 +40,16 @@ $('document').ready(function() {
         			{ name: 'italic', className: 'fa fa-italic', text: 'Italic', onClick: fn },
         		],
         	});
-
-    $('body').on('click', 'div.show-spoiler', function(){
-        $(this).find('.fa').toggleClass('fa-eye');
-        $(this).find('.fa').toggleClass('fa-eye-slash');
-        if($(this).find('.fa').hasClass('fa-eye')){
-            $(this).find('.btn-text').first().text($(this).find('.btn-text').first().data('hide_text'));
-        } else {
-            $(this).find('.btn-text').first().text($(this).find('.btn-text').first().data('show_text'));
-        }
-        $(this).parent().find('> .spoiler').toggleClass('hidden');
+    
+        $('body').on('click', 'div.show-spoiler', function(){
+            $(this).find('.fa').toggleClass('fa-eye');
+            $(this).find('.fa').toggleClass('fa-eye-slash');
+            if($(this).find('.fa').hasClass('fa-eye')){
+                $(this).find('.btn-text').first().text($(this).find('.btn-text').first().data('hide_text'));
+            } else {
+                $(this).find('.btn-text').first().text($(this).find('.btn-text').first().data('show_text'));
+            }
+            $(this).parent().find('> .spoiler').toggleClass('hidden');
+        });
     });
-
 });
