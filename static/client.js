@@ -53,7 +53,7 @@ $('document').ready(function() {
             $(this).parent().find('> .spoiler').toggleClass('hidden');
         });
     });
-});
+
 	BBcode.render = function (ev, data) {
         
 		if (!data.posts && !data.post) {
