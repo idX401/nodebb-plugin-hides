@@ -59,9 +59,9 @@ plugin.alterContent = async function (params) {
 	    if(text.search(clubRegex) !== -1) {
 		    if (typeof user !== 'undefined'){
 			if(user.groupTitleArray.includes('administrators') || user.groupTitleArray.includes('Global Moderators')){
-				return text;
+				return text.replace(clubRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для администрации.</div><div class="bbCodeBlock-content">$1</div></div>');
 			}else{
-				return text.replace(clubRegex, '<b>[Только администрация может просмотреть это сообщение]</b>');
+				return text.replace(clubRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для администрации.</div></div>');
 		    	}
 		    }else{
 			return text.replace(clubRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
@@ -79,7 +79,7 @@ plugin.alterContent = async function (params) {
 			if(userData >= parseInt(hideData)){
 				return text.replace(daysRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для просмотра Вам необходимо провести не менее $1 дней на форуме.</div><div class="bbCodeBlock-content">$2</div></div>');
 			}else{
-				return text.replace(daysRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для просмотра Вам необходимо провести не менее '+hideData+' дней на форуме.</div></div>');
+				return text.replace(daysRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для просмотра Вам необходимо провести не менее $1 дней на форуме.</div></div>');
 		    	}
 		    }else{
 			return text.replace(daysRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
@@ -94,9 +94,9 @@ plugin.alterContent = async function (params) {
 			let hideData = text.match(likesRegex)[0].match(/\d+/gi)[0];
 			console.log(hideData,' likes');
 			if(user.reputation >= parseInt(hideData)){
-				return text;
+				return text.replace(likesRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для просмотра Вам необходимо иметь не менее $1 репутации на форуме.</div><div class="bbCodeBlock-content">$2</div></div>');
 			}else{
-				return text.replace(likesRegex, '<b>[Для просмотра вам необходимо иметь больше: '+hideData+' репутации]</b>');
+				return text.replace(likesRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для просмотра Вам необходимо иметь не менее $1 репутации на форуме.</div></div>');
 		    	}
 		    }else{
 			return text.replace(likesRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
@@ -111,9 +111,9 @@ plugin.alterContent = async function (params) {
 			let hideData = text.match(postsRegex)[0].match(/\d+/gi)[0];
 			console.log(hideData,' posts');
 			if(user.postcount >= parseInt(hideData)){
-				return text;
+				return text.replace(postsRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для просмотра Вам необходимо иметь не менее $1 сообщений на форуме.</div><div class="bbCodeBlock-content">$2</div></div>');
 			}else{
-				return text.replace(postsRegex, '<b>[Для просмотра вам необходимо иметь больше: '+hideData+' сообщений]</b>');
+				return text.replace(postsRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для просмотра Вам необходимо иметь не менее $1 сообщений на форуме.</div></div>');
 		    	}
 		    }else{
 			return text.replace(postsRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
@@ -128,9 +128,9 @@ plugin.alterContent = async function (params) {
 			let hideData = text.match(useridsRegex)[0].match(/=(.+?)\]/gi)[0].replace(/=/,'').replace(/\]/,'').split(',');
 			console.log(hideData,' userids', user.uid.toString(), hideData.includes(user.uid.toString()));
 			if(hideData.includes(user.uid.toString())){
-				return text;
+				return text.replace(useridsRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для определенных пользователей.</div><div class="bbCodeBlock-content">$2</div></div>');
 			}else{
-				return text.replace(useridsRegex, '<b>[Это сообщение доступно ограниченному числу лиц]</b>');
+				return text.replace(useridsRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для определенных пользователей.</div></div>');
 		    	}
 		    }else{
 			return text.replace(useridsRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
@@ -145,9 +145,9 @@ plugin.alterContent = async function (params) {
 			let hideData = text.match(exceptidsRegex)[0].match(/=(.+?)\]/gi)[0].replace(/=/,'').replace(/\]/,'').split(',');
 			console.log(hideData,' exceptids', user.uid.toString(), hideData.includes(user.uid.toString()));
 			if(hideData.includes(user.uid.toString())){
-				return text.replace(exceptidsRegex, '<b>[Это сообщение всем кроме ограниченного числа лиц]</b>');
+				return text.replace(exceptidsRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для всех, кроме определенных пользователей.</div></div>');
 			}else{
-				return text;
+				return text.replace(exceptidsRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для всех, кроме определенных пользователей.</div><div class="bbCodeBlock-content">$2</div></div>');
 		    	}
 		    }else{
 			return text.replace(exceptidsRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
