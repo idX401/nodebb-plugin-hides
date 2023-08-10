@@ -52,8 +52,16 @@ plugin.alterContent = async function (params) {
 	function parseLinkHref(text) {
 	    return text.replace(linkHrefRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
 	}
-	function parseHide(text) {
-	    return text.replace(hideRegex, '<a href="/login" class="hide-to-guest">[[hidetoguest:hide-message]]</a>');
+	function parseHide(text, user) {
+	    if(text.search(hideRegex) !== -1) {
+		    if (typeof user !== 'undefined'){
+			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для администрации.</div><div class="bbCodeBlock-content">$1</div></div>');
+		    }else{
+			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Вам необходимо <a href="/login" class="hide-to-guest">авторизоваться</a>, чтобы просмотреть содержимое.</div></div>');
+		    }
+	    }else{
+	    	return text;
+	    }
 	}
 	function parseClub(text, user) {
 	    if(text.search(clubRegex) !== -1) {
@@ -183,6 +191,7 @@ plugin.alterContent = async function (params) {
 		let userData = await plugin.getUser(params.caller.uid);
 		console.log(params,'-3-',userData);
 		for (const post of params.posts) {
+			post.content = parseHide(post.content,userData);
 			post.content = parseClub(post.content,userData);
 			post.content = parseDays(post.content,userData);
 			post.content = parseLikes(post.content,userData);
