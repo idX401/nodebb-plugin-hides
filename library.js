@@ -64,8 +64,6 @@ plugin.alterContent = async function (params) {
 	    }
 	}
 	function parseClub(text, user) {
-		console.log(text.search(clubRegex) !== -1);
-		console.log(typeof user !== 'undefined');
 	    if(text.search(clubRegex) !== -1) {
 		    if (typeof user !== 'undefined'){
 			if(user.groupTitleArray.includes('administrators') || user.groupTitleArray.includes('Global Moderators')){
@@ -74,7 +72,7 @@ plugin.alterContent = async function (params) {
 				return text.replace(clubRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для администрации.</div></div>');
 		    	}
 		    }else{
-			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
+			return text.replace(clubRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
 		    }
 	    }else{
 	    	return text;
@@ -92,7 +90,7 @@ plugin.alterContent = async function (params) {
 				return text.replace(daysRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для просмотра Вам необходимо провести не менее $1 дней на форуме.</div></div>');
 		    	}
 		    }else{
-			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
+			return text.replace(daysRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
 		    }
 	    }else{
 	    	return text;
@@ -109,7 +107,7 @@ plugin.alterContent = async function (params) {
 				return text.replace(likesRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для просмотра Вам необходимо иметь не менее $1 репутации на форуме.</div></div>');
 		    	}
 		    }else{
-			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
+			return text.replace(likesRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
 		    }
 	    }else{
 	    	return text;
@@ -126,7 +124,7 @@ plugin.alterContent = async function (params) {
 				return text.replace(postsRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для просмотра Вам необходимо иметь не менее $1 сообщений на форуме.</div></div>');
 		    	}
 		    }else{
-			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
+			return text.replace(postsRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
 		    }
 	    }else{
 	    	return text;
@@ -143,7 +141,7 @@ plugin.alterContent = async function (params) {
 				return text.replace(useridsRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для определенных пользователей.</div></div>');
 		    	}
 		    }else{
-			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
+			return text.replace(useridsRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
 		    }
 	    }else{
 	    	return text;
@@ -160,7 +158,7 @@ plugin.alterContent = async function (params) {
 				return text.replace(exceptidsRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">Скрытое содержимое. Для всех, кроме определенных пользователей.</div><div class="bbCodeBlock-content">$2</div></div>');
 		    	}
 		    }else{
-			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
+			return text.replace(exceptidsRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-active]]</div></div>');
 		    }
 	    }else{
 	    	return text;
@@ -181,7 +179,6 @@ plugin.alterContent = async function (params) {
 		for (const post of params.posts) {
 			post.content = parseLinkHref(post.content);
 			post.content = parseHide(post.content);
-			console.log(post.content);
 			post.content = parseClub(post.content);
 			post.content = parseDays(post.content);
 			post.content = parseLikes(post.content);
