@@ -53,8 +53,6 @@ plugin.alterContent = async function (params) {
 	    return text.replace(linkHrefRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-link]]</div></div>');
 	}
 	function parseHide(text, user) {
-		console.log(text.search(hideRegex) !== -1);
-		console.log(typeof user !== 'undefined');
 	    if(text.search(hideRegex) !== -1) {
 		    if (typeof user !== 'undefined'){
 			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-inactive]]</div><div class="bbCodeBlock-content">$1</div></div>');
@@ -66,6 +64,8 @@ plugin.alterContent = async function (params) {
 	    }
 	}
 	function parseClub(text, user) {
+		console.log(text.search(clubRegex) !== -1);
+		console.log(typeof user !== 'undefined');
 	    if(text.search(clubRegex) !== -1) {
 		    if (typeof user !== 'undefined'){
 			if(user.groupTitleArray.includes('administrators') || user.groupTitleArray.includes('Global Moderators')){
@@ -180,8 +180,8 @@ plugin.alterContent = async function (params) {
 	if (!params.caller.uid) {
 		for (const post of params.posts) {
 			post.content = parseLinkHref(post.content);
-			console.log(post.content);
 			post.content = parseHide(post.content);
+			console.log(post.content);
 			post.content = parseClub(post.content);
 			post.content = parseDays(post.content);
 			post.content = parseLikes(post.content);
