@@ -178,6 +178,7 @@ plugin.alterContent = async function (params) {
 	if (!params.caller.uid) {
 		for (const post of params.posts) {
 			post.content = parseLinkHref(post.content);
+			console.log(post.content);
 			post.content = parseHide(post.content);
 			post.content = parseClub(post.content);
 			post.content = parseDays(post.content);
