@@ -53,6 +53,8 @@ plugin.alterContent = async function (params) {
 	    return text.replace(linkHrefRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-link]]</div></div>');
 	}
 	function parseHide(text, user) {
+		console.log(text.search(hideRegex) !== -1);
+		console.log(typeof user !== 'undefined');
 	    if(text.search(hideRegex) !== -1) {
 		    if (typeof user !== 'undefined'){
 			return text.replace(hideRegex, '<div class="bbCodeBlock bbCodeBlock--hide"><div class="bbCodeBlock-title">[[hidetoguest:hide-content-inactive]]</div><div class="bbCodeBlock-content">$1</div></div>');
