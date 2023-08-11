@@ -1,5 +1,5 @@
 {
-  "hide-link": "<a href=\"/login\" class=\"hide-to-guest\">Войдите или зарегистрируйтесь для просмотра ссылок</a>",
+  "hide-link": "<a href=\"/login\" class=\"hide-to-guest\">Войдите</a> или <a href=\"/register\" class=\"hide-to-guest\">зарегистрируйтесь</a> для просмотра ссылок.",
   "hide-content-active": "Скрытое содержимое для <a href=\"/login\" class=\"hide-to-guest\">авторизованных</a> пользователей.",
   "hide-content-inactive": "Скрытое содержимое для авторизованных пользователей."
 }
