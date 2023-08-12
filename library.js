@@ -188,7 +188,8 @@ plugin.parseContent = async function(data) {
 	}
  	*/
 	function parseP(text){
-	    return text.replace(/\n(.+)\n/gi,'<p dir="auto">$1</p>\n');
+	    //return text.replace(/\n(.+)\n/gi,'<p dir="auto">$1</p>\n');
+		return text.replace(/\n/g,'$1<br>');
 	}
 	function parseBolt(text) {
 	    while(text.search(boltRegex) !== -1) {
@@ -420,7 +421,7 @@ plugin.parseContent = async function(data) {
 		return data;
 	}
 	if('string' === typeof data){
-		data = renderText(data)
+		data = renderPosts(data)
 	} else if (!data.caller.uid) {
 		if (data.postData && data.postData.content != null && data.postData.content != undefined) {
 			data.postData.content = renderPosts(data.postData.content);
