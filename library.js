@@ -341,8 +341,7 @@ plugin.parseContent = async function(data) {
 	    }
 	    return text;
 	}
-
-	function render(data, user){
+	function renderText(data, user){
 		data = parseHide(data,user);
 		data = parseClub(data,user);
 		data = parseDays(data,user);
@@ -381,21 +380,60 @@ plugin.parseContent = async function(data) {
 
 		return data;
 	}
+	function renderPosts(data, user){
+		data = parseHide(data,user);
+		data = parseClub(data,user);
+		data = parseDays(data,user);
+		data = parseLikes(data,user);
+		data = parsePosts(data,user);
+		data = parseUserids(data,user);
+		data = parseExceptids(data,user);
+		data = parseVisitor(data,user);	
+		
+		data = parseP(data);
+		data = parseBolt(data);
+		data = parseItalic(data);
+		data = parseUnderline(data);
+		data = parseCrossedOut(data);
+		data = parseColor(data);
+		data = parseFont(data);
+		data = parseSize(data);
+		data = parseBlur(data);
+		data = parseUrl(data);
+		data = parseEmail(data);
+		data = parseUrlCustom(data);
+		data = parseEmailCustom(data);
+		data = parseImg(data);
+		data = parseImgCustom(data);
+		data = parseMedia(data);
+		//list
+		data = parseLeft(data);
+		data = parseCenter(data);
+		data = parseRight(data);
+		data = parseQuote(data);
+		data = parseQuoteCustom(data);
+		data = parseSpoilerFix(data);
+		data = parseSpoiler(data);
+		data = parseSpoilerCustom(data);
+		data = parseIcode(data);
+
+		return data;
+	}
 	if('string' === typeof data){
-		data = render(data)
+		data = renderText(data)
 	} else if (!data.caller.uid) {
 		if (data.postData && data.postData.content != null && data.postData.content != undefined) {
-			data.postData.content = render(data.postData.content);
+			data.postData.content = renderPosts(data.postData.content);
 		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
-			data.userData.signature = render(data.userData.signature);
+			data.userData.signature = renderPosts(data.userData.signature);
 		}
 	}else{
-		let userData = await plugin.getUser(data.caller.uid);
-		console.log(data,'-3-',userData);
+		let callerData = await plugin.getUser(data.caller.uid);
+		console.log(data,'-3-',callerData);
 		if (data.postData && data.postData.content != null && data.postData.content != undefined) {
-			data.postData.content = render(data.postData.content,userData);
+			data.postData.content = renderPosts(data.postData.content,callerData);
 		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
-			data.userData.signature = render(data.userData.signature,userData);
+			data.userData.signature = renderPosts(data.userData.signature,callerData);
 		}
 	}
 	return data
