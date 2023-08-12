@@ -381,7 +381,7 @@ plugin.parseContent = async function(data) {
 
 		return data;
 	}
-	
+	console.log(typeof data);
 	if (!data.caller.uid) {
 		if ('string' === typeof data) {
 			data = render(data)
