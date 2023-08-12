@@ -189,7 +189,7 @@ plugin.parseContent = async function(data) {
  	*/
 	function parseP(text){
 	    //return text.replace(/\n(.+)\n/gi,'<p dir="auto">$1</p>\n');
-		return text.replace(/\n/g,'$1<br>');
+		return text.replace(/\n/g,'<br>');
 	}
 	function parseBolt(text) {
 	    while(text.search(boltRegex) !== -1) {
