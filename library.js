@@ -391,8 +391,8 @@ plugin.parseContent = async function(data) {
 			data.userData.signature = render(data.userData.signature);
 		}
 	}else{
-		let userData = await plugin.getUser(params.caller.uid);
-		console.log(params,'-3-',userData);
+		let userData = await plugin.getUser(data.caller.uid);
+		//console.log(data,'-3-',userData);
 		if ('string' === typeof data) {
 			data = render(data,userData)
 		} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
