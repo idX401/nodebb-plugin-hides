@@ -382,7 +382,7 @@ plugin.parseContent = async function(data) {
 		return data;
 	}
 	
-	if (!params.caller.uid) {
+	if (!data.caller.uid) {
 		if ('string' === typeof data) {
 			data = render(data)
 		} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
