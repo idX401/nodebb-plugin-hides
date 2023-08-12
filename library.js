@@ -429,6 +429,12 @@ plugin.parseContent = async function(data) {
 		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
 			data.userData.signature = renderPosts(data.userData.signature);
 		}
+	} else if (!data.postData.user) {
+		if (data.postData && data.postData.content != null && data.postData.content != undefined) {
+			data.postData.content = renderPosts(data.postData.content);
+		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
+			data.userData.signature = renderPosts(data.userData.signature);
+		}
 	}else{
 		let callerData = await plugin.getUser(data.caller.uid);
 		console.log(data,'-3-',callerData);
