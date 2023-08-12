@@ -382,12 +382,9 @@ plugin.parseContent = async function(data) {
 		return data;
 	}
 	if('string' === typeof data){
-		console.log('ShoutBOX');
-	}
-	if (!data.caller.uid) {
-		if ('string' === typeof data) {
-			data = render(data)
-		} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
+		data = render(data)
+	} else if (!data.caller.uid) {
+		if (data.postData && data.postData.content != null && data.postData.content != undefined) {
 			data.postData.content = render(data.postData.content);
 		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
 			data.userData.signature = render(data.userData.signature);
@@ -395,9 +392,7 @@ plugin.parseContent = async function(data) {
 	}else{
 		let userData = await plugin.getUser(data.caller.uid);
 		console.log(data,'-3-',userData);
-		if ('string' === typeof data) {
-			data = render(data,userData)
-		} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
+		if (data.postData && data.postData.content != null && data.postData.content != undefined) {
 			data.postData.content = render(data.postData.content,userData);
 		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
 			data.userData.signature = render(data.userData.signature,userData);
