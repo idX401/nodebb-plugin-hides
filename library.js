@@ -392,7 +392,7 @@ plugin.parseContent = async function(data) {
 		}
 	}else{
 		let userData = await plugin.getUser(data.caller.uid);
-		//console.log(data,'-3-',userData);
+		console.log(data,'-3-',userData);
 		if ('string' === typeof data) {
 			data = render(data,userData)
 		} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
