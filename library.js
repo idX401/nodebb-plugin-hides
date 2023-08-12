@@ -391,7 +391,7 @@ plugin.parseContent = async function(data) {
 		data = parseExceptids(data,user);
 		data = parseVisitor(data,user);	
 		
-		data = parseP(data);
+		//data = parseP(data);
 		data = parseBolt(data);
 		data = parseItalic(data);
 		data = parseUnderline(data);
