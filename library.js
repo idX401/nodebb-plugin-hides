@@ -44,7 +44,10 @@ const visitorRegex = /\[visitor\]([^[]*(?:\[(?!visitor\]|\/visitor\])[^[]*)*)\[\
 //const linkRegex = var expression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 const linkHrefRegex = /<a[^>]*>[^<]*<\/a>/g;
 
-plugin.alterContent = async function (params) {
+plugin.getUser = async function (uid) {
+	return await user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
+};
+plugin.parseContent = function(data, callback) {
 	//console.log(params);
 	//bolt [b][/b]
 	//post.content = post.content.replace(boltRegex, "<strong>$1</strong>");
@@ -175,39 +178,7 @@ plugin.alterContent = async function (params) {
 	    	return text;
 	    }
 	}
-	if (!params.caller.uid) {
-		for (const post of params.posts) {
-			post.content = parseLinkHref(post.content);
-			post.content = parseHide(post.content);
-			post.content = parseClub(post.content);
-			post.content = parseDays(post.content);
-			post.content = parseLikes(post.content);
-			post.content = parsePosts(post.content);
-			post.content = parseUserids(post.content);
-			post.content = parseExceptids(post.content);
-			post.content = parseVisitor(post.content);
-		}
-	}else{
-		let userData = await plugin.getUser(params.caller.uid);
-		console.log(params,'-3-',userData);
-		for (const post of params.posts) {
-			post.content = parseHide(post.content,userData);
-			post.content = parseClub(post.content,userData);
-			post.content = parseDays(post.content,userData);
-			post.content = parseLikes(post.content,userData);
-			post.content = parsePosts(post.content,userData);
-			post.content = parseUserids(post.content,userData);
-			post.content = parseExceptids(post.content,userData);
-			post.content = parseVisitor(post.content,userData);	
-		}
-	}
-	return params;
-};
-
-plugin.getUser = async function (uid) {
-	return await user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
-};
-plugin.parseContent = function(data, callback) {
+	/////
 	/*
 	function parseLinks(text) {
 	    while(text.search(linkRegex) !== -1) {
@@ -370,7 +341,17 @@ plugin.parseContent = function(data, callback) {
 	    }
 	    return text;
 	}
-	if ('string' === typeof data) {
+
+	function render(data, user){
+		data = parseHide(data,user);
+		data = parseClub(data,user);
+		data = parseDays(data,user);
+		data = parseLikes(data,user);
+		data = parsePosts(data,user);
+		data = parseUserids(data,user);
+		data = parseExceptids(data,user);
+		data = parseVisitor(data,user);	
+		
 		//data = parseP(data);
 		data = parseBolt(data);
 		data = parseItalic(data);
@@ -397,60 +378,28 @@ plugin.parseContent = function(data, callback) {
 		data = parseSpoiler(data);
 		data = parseSpoilerCustom(data);
 		data = parseIcode(data);
-	} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
-		//data.postData.content = parseP(data.postData.content);
-		data.postData.content = parseBolt(data.postData.content);
-		data.postData.content = parseItalic(data.postData.content);
-		data.postData.content = parseUnderline(data.postData.content);
-		data.postData.content = parseCrossedOut(data.postData.content);
-		data.postData.content = parseColor(data.postData.content);
-		data.postData.content = parseFont(data.postData.content);
-		data.postData.content = parseSize(data.postData.content);
-		data.postData.content = parseBlur(data.postData.content);
-		data.postData.content = parseUrl(data.postData.content);
-		data.postData.content = parseEmail(data.postData.content);
-		data.postData.content = parseUrlCustom(data.postData.content);
-		data.postData.content = parseEmailCustom(data.postData.content);
-		data.postData.content = parseImg(data.postData.content);
-		data.postData.content = parseImgCustom(data.postData.content);
-		data.postData.content = parseMedia(data.postData.content);
-		//list
-		data.postData.content = parseLeft(data.postData.content);
-		data.postData.content = parseCenter(data.postData.content);
-		data.postData.content = parseRight(data.postData.content);
-		data.postData.content = parseQuote(data.postData.content);
-		data.postData.content = parseQuoteCustom(data.postData.content);
-		data.postData.content = parseSpoilerFix(data.postData.content);
-		data.postData.content = parseSpoiler(data.postData.content);
-		data.postData.content = parseSpoilerCustom(data.postData.content);
-		data.postData.content = parseIcode(data.postData.content);
-	} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
-		//data.userData.signature = parseP(data.userData.signature);
-		data.userData.signature = parseBolt(data.userData.signature);
-		data.userData.signature = parseItalic(data.userData.signature);
-		data.userData.signature = parseUnderline(data.userData.signature);
-		data.userData.signature = parseCrossedOut(data.userData.signature);
-		data.userData.signature = parseColor(data.userData.signature);
-		data.userData.signature = parseFont(data.userData.signature);
-		data.userData.signature = parseSize(data.userData.signature);
-		data.userData.signature = parseBlur(data.userData.signature);
-		data.userData.signature = parseUrl(data.userData.signature);
-		data.userData.signature = parseEmail(data.userData.signature);
-		data.userData.signature = parseUrlCustom(data.userData.signature);
-		data.userData.signature = parseEmailCustom(data.userData.signature);
-		data.userData.signature = parseImg(data.userData.signature);
-		data.userData.signature = parseImgCustom(data.userData.signature);
-		data.userData.signature = parseMedia(data.userData.signature);
-		//list
-		data.userData.signature = parseLeft(data.userData.signature);
-		data.userData.signature = parseCenter(data.userData.signature);
-		data.userData.signature = parseRight(data.userData.signature);
-		data.userData.signature = parseQuote(data.userData.signature);
-		data.userData.signature = parseQuoteCustom(data.userData.signature);
-		data.userData.signature = parseSpoilerFix(data.userData.signature);
-		data.userData.signature = parseSpoiler(data.userData.signature);
-		data.userData.signature = parseSpoilerCustom(data.userData.signature);
-		data.userData.signature = parseIcode(data.userData.signature);
+
+		return data;
+	}
+	
+	if (!params.caller.uid) {
+		if ('string' === typeof data) {
+			data = render(data)
+		} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
+			data.postData.content = render(data.postData.content);
+		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
+			data.userData.signature = render(data.userData.signature);
+		}
+	}else{
+		let userData = await plugin.getUser(params.caller.uid);
+		console.log(params,'-3-',userData);
+		if ('string' === typeof data) {
+			data = render(data,userData)
+		} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
+			data.postData.content = render(data.postData.content,userData);
+		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
+			data.userData.signature = render(data.userData.signature,userData);
+		}
 	}
 	callback(null, data);
 };
