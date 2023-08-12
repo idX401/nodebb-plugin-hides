@@ -429,7 +429,7 @@ plugin.parseContent = async function(data) {
 		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
 			data.userData.signature = renderPosts(data.userData.signature);
 		}
-	} else if (typeof data.postData.user !== 'undefined') {
+	} else if (typeof data.postData.user != 'undefined') {
 		if (data.postData && data.postData.content != null && data.postData.content != undefined) {
 			data.postData.content = renderPosts(data.postData.content);
 		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
