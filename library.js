@@ -421,6 +421,9 @@ plugin.parseContent = async function(data) {
 
 		return data;
 	}
+	console.log(typeof data);
+	console.log(typeof data.postData);
+	console.log(typeof data.postData.user);	
 	if('string' === typeof data){
 		data = renderPosts(data)
 	} else if (!data.caller.uid) {
