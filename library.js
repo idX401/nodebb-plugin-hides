@@ -47,8 +47,8 @@ const linkHrefRegex = /<a[^>]*>[^<]*<\/a>/g;
 plugin.getUser = async function (uid) {
 	return await user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
 };
-plugin.parseContent = function(data, callback) {
-	//console.log(params);
+plugin.parseContent = async function(data) {
+	console.log(data);
 	//bolt [b][/b]
 	//post.content = post.content.replace(boltRegex, "<strong>$1</strong>");
 	//hide links for guest
@@ -401,6 +401,7 @@ plugin.parseContent = function(data, callback) {
 			data.userData.signature = render(data.userData.signature,userData);
 		}
 	}
-	callback(null, data);
+	return data
+	//callback(null, data);
 };
 module.exports = plugin;
