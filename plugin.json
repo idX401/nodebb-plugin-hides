@@ -10,7 +10,7 @@
   "css": [ "./static/style.css" ],
   "scripts": [ "./static/client.js" ],
   "hooks": [
-	    { "hook": "filter:account.getPostsFromUserSet", "method": "alterUserContent" },
+	    { "hook": "filter:post.getPostSummaryByPids", "method": "alterUserContent" },
 	    { "hook": "filter:post.getPosts", "method": "alterContent" },
 	    { "hook": "filter:parse.post", "method": "parseContent" },
 	    { "hook": "filter:parse.signature", "method": "parseContent" },
