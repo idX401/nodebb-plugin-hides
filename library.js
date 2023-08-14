@@ -47,6 +47,11 @@ const linkHrefRegex = /<a[^>]*>[^<]*<\/a>/g;
 plugin.getUser = async function (uid) {
 	return await user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
 };
+
+plugin.alterUserContent = async function (data) {
+	console.log(data);
+	return data;
+};
 plugin.alterContent = async function (data) {
 	//bolt [b][/b]
 	//post.content = post.content.replace(boltRegex, "<strong>$1</strong>");
