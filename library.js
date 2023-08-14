@@ -177,7 +177,7 @@ plugin.alterContent = async function (data) {
 	    	return text;
 	    }
 	}
-	function renderPosts(data, user){
+	function render(data, user){
 		data = parseHide(data,user);
 		data = parseClub(data,user);
 		data = parseDays(data,user);
@@ -191,21 +191,23 @@ plugin.alterContent = async function (data) {
 	//console.log(typeof data);
 	//console.log(typeof data.postData);
 	//console.log(typeof data.postData.user);	
-	if('string' === typeof data){
-		data = renderPosts(data)
-	} else if (!data.caller.uid) {
-		if (data.postData && data.postData.content != null && data.postData.content != undefined) {
-			data.postData.content = renderPosts(data.postData.content);
+	if (!data.caller.uid) {
+		if('string' === typeof data){
+			data = render(data)
+		} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
+			data.postData.content = render(data.postData.content);
 		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
-			data.userData.signature = renderPosts(data.userData.signature);
+			data.userData.signature = render(data.userData.signature);
 		}
 	}else {
 		let callerData = await plugin.getUser(data.caller.uid);
 		console.log(data,'-3-',callerData);
-		if (data.postData && data.postData.content != null && data.postData.content != undefined) {
-			data.postData.content = renderPosts(data.postData.content,callerData);
+		if('string' === typeof data){
+			data = render(data,callerData)
+		} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
+			data.postData.content = render(data.postData.content,callerData);
 		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
-			data.userData.signature = renderPosts(data.userData.signature,callerData);
+			data.userData.signature = render(data.userData.signature,callerData);
 		}
 	}
 	return data;
