@@ -47,8 +47,7 @@ const linkHrefRegex = /<a[^>]*>[^<]*<\/a>/g;
 plugin.getUser = async function (uid) {
 	return await user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
 };
-plugin.parseContent = async function(data) {
-	console.log(data);
+plugin.alterContent = async function (data) {
 	//bolt [b][/b]
 	//post.content = post.content.replace(boltRegex, "<strong>$1</strong>");
 	//hide links for guest
@@ -178,7 +177,41 @@ plugin.parseContent = async function(data) {
 	    	return text;
 	    }
 	}
-	/////
+	function renderPosts(data, user){
+		data = parseHide(data,user);
+		data = parseClub(data,user);
+		data = parseDays(data,user);
+		data = parseLikes(data,user);
+		data = parsePosts(data,user);
+		data = parseUserids(data,user);
+		data = parseExceptids(data,user);
+		data = parseVisitor(data,user);	
+		return data;
+	}
+	//console.log(typeof data);
+	//console.log(typeof data.postData);
+	//console.log(typeof data.postData.user);	
+	if('string' === typeof data){
+		data = renderPosts(data)
+	} else if (!data.caller.uid) {
+		if (data.postData && data.postData.content != null && data.postData.content != undefined) {
+			data.postData.content = renderPosts(data.postData.content);
+		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
+			data.userData.signature = renderPosts(data.userData.signature);
+		}
+	}else {
+		let callerData = await plugin.getUser(data.caller.uid);
+		console.log(data,'-3-',callerData);
+		if (data.postData && data.postData.content != null && data.postData.content != undefined) {
+			data.postData.content = renderPosts(data.postData.content,callerData);
+		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
+			data.userData.signature = renderPosts(data.userData.signature,callerData);
+		}
+	}
+	return data;
+};
+plugin.parseContent = async function(data) {
+	//console.log(data);
 	/*
 	function parseLinks(text) {
 	    while(text.search(linkRegex) !== -1) {
@@ -343,16 +376,7 @@ plugin.parseContent = async function(data) {
 	    }
 	    return text;
 	}
-	function renderText(data, user){
-		data = parseHide(data,user);
-		data = parseClub(data,user);
-		data = parseDays(data,user);
-		data = parseLikes(data,user);
-		data = parsePosts(data,user);
-		data = parseUserids(data,user);
-		data = parseExceptids(data,user);
-		data = parseVisitor(data,user);	
-		
+	function renderPosts(data){
 		data = parseP(data);
 		data = parseBolt(data);
 		data = parseItalic(data);
@@ -382,70 +406,13 @@ plugin.parseContent = async function(data) {
 
 		return data;
 	}
-	function renderPosts(data, user){
-		data = parseHide(data,user);
-		data = parseClub(data,user);
-		data = parseDays(data,user);
-		data = parseLikes(data,user);
-		data = parsePosts(data,user);
-		data = parseUserids(data,user);
-		data = parseExceptids(data,user);
-		data = parseVisitor(data,user);	
-		
-		data = parseP(data);
-		data = parseBolt(data);
-		data = parseItalic(data);
-		data = parseUnderline(data);
-		data = parseCrossedOut(data);
-		data = parseColor(data);
-		data = parseFont(data);
-		data = parseSize(data);
-		data = parseBlur(data);
-		data = parseUrl(data);
-		data = parseEmail(data);
-		data = parseUrlCustom(data);
-		data = parseEmailCustom(data);
-		data = parseImg(data);
-		data = parseImgCustom(data);
-		data = parseMedia(data);
-		//list
-		data = parseLeft(data);
-		data = parseCenter(data);
-		data = parseRight(data);
-		data = parseQuote(data);
-		data = parseQuoteCustom(data);
-		data = parseSpoilerFix(data);
-		data = parseSpoiler(data);
-		data = parseSpoilerCustom(data);
-		data = parseIcode(data);
 
-		return data;
-	}
-	//console.log(typeof data);
-	//console.log(typeof data.postData);
-	//console.log(typeof data.postData.user);	
 	if('string' === typeof data){
 		data = renderPosts(data)
-	} else if (!data.caller.uid) {
-		if (data.postData && data.postData.content != null && data.postData.content != undefined) {
-			data.postData.content = renderPosts(data.postData.content);
-		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
-			data.userData.signature = renderPosts(data.userData.signature);
-		}
-	}/*else if (data.caller.req.originalUrl.match(/user\/(.*)\/posts/) != null) {
-		if (data.postData && data.postData.content != null && data.postData.content != undefined) {
-			data.postData.content = renderPosts(data.postData.content);
-		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
-			data.userData.signature = renderPosts(data.userData.signature);
-		}
-	} */else {
-		let callerData = await plugin.getUser(data.caller.uid);
-		console.log(data,'-3-',callerData);
-		if (data.postData && data.postData.content != null && data.postData.content != undefined) {
-			data.postData.content = renderPosts(data.postData.content,callerData);
-		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
-			data.userData.signature = renderPosts(data.userData.signature,callerData);
-		}
+	} else if (data.postData && data.postData.content != null && data.postData.content != undefined) {
+		data.postData.content = renderPosts(data.postData.content);
+	} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
+		data.userData.signature = renderPosts(data.userData.signature);
 	}
 	return data
 	//callback(null, data);
