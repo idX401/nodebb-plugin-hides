@@ -198,6 +198,10 @@ plugin.alterContent = async function (data) {
 			data.postData.content = render(data.postData.content);
 		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
 			data.userData.signature = render(data.userData.signature);
+		}else{
+			for (const post of params.posts) {
+				post.content = render(post.content);
+			}
 		}
 	}else {
 		let callerData = await plugin.getUser(data.caller.uid);
@@ -208,6 +212,10 @@ plugin.alterContent = async function (data) {
 			data.postData.content = render(data.postData.content,callerData);
 		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
 			data.userData.signature = render(data.userData.signature,callerData);
+		}else{
+			for (const post of params.posts) {
+				post.content = render(post.content);
+			}
 		}
 	}
 	return data;
