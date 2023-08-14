@@ -214,7 +214,7 @@ plugin.alterContent = async function (data) {
 			data.userData.signature = render(data.userData.signature,callerData);
 		}else{
 			for (const post of data.posts) {
-				post.content = render(post.content);
+				post.content = render(post.content,callerData);
 			}
 		}
 	}
