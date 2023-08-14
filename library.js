@@ -199,7 +199,7 @@ plugin.alterContent = async function (data) {
 		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
 			data.userData.signature = render(data.userData.signature);
 		}else{
-			for (const post of params.posts) {
+			for (const post of data.posts) {
 				post.content = render(post.content);
 			}
 		}
@@ -213,7 +213,7 @@ plugin.alterContent = async function (data) {
 		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
 			data.userData.signature = render(data.userData.signature,callerData);
 		}else{
-			for (const post of params.posts) {
+			for (const post of data.posts) {
 				post.content = render(post.content);
 			}
 		}
