@@ -432,13 +432,13 @@ plugin.parseContent = async function(data) {
 		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
 			data.userData.signature = renderPosts(data.userData.signature);
 		}
-	} /*else if (data.postData && data.postData.user && typeof data.postData.user.uid !== 'null' && typeof data.postData.user.uid !== 'undefined') {
+	}else if (data.postData && data.postData.category) {
 		if (data.postData && data.postData.content != null && data.postData.content != undefined) {
 			data.postData.content = renderPosts(data.postData.content);
 		} else if (data.userData && data.userData.signature != null && data.userData.signature != undefined) {
 			data.userData.signature = renderPosts(data.userData.signature);
 		}
-	} */else {
+	} else {
 		let callerData = await plugin.getUser(data.caller.uid);
 		console.log(data,'-3-',callerData);
 		if (data.postData && data.postData.content != null && data.postData.content != undefined) {
