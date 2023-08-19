@@ -44,6 +44,22 @@ const visitorRegex = /\[visitor\]([^[]*(?:\[(?!visitor\]|\/visitor\])[^[]*)*)\[\
 //const linkRegex = var expression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 const linkHrefRegex = /<a[^>]*>[^<]*<\/a>/g;
 
+plugin.buttons = async function (hookData) {
+	const formatting = [
+		{
+			className: 'fa fa-gear',
+			title: 'formatting options',
+			dropdownItems: [
+				{ name: 'bold', className: 'fa fa-bold', text: '[[modules:composer.formatting.bold]]' },
+				{ name: 'italic', className: 'fa fa-italic', text: '[[modules:composer.formatting.italic]]' },
+			],
+		},
+	];
+
+	hookData.options = hookData.options.concat(formatting);
+
+	return hookData;
+};
 plugin.getUser = async function (uid) {
 	return await user.getUserFields(uid, ['username', 'userslug', 'status', 'postcount', 'reputation', 'joindate', 'groupTitle']);
 };
