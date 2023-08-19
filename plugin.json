@@ -10,6 +10,7 @@
   "css": [ "./static/style.css" ],
   "scripts": [ "./static/client.js" ],
   "hooks": [
+	    { "hook": "filter:composer.formatting", "method": "buttons" },
 	    { "hook": "filter:post.getPostSummaryByPids", "method": "alterContent" },
 	    { "hook": "filter:post.getPosts", "method": "alterContent" },
 	    { "hook": "filter:parse.post", "method": "parseContent" },
