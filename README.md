@@ -14,6 +14,6 @@ This NodeBB plugin
 
 Either through the NodeBB ACP or:
 
-    npm i git+https://idX401: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@github.com/idX401/nodebb-plugin-hides.git
+    npm i git+https://github.com/idX401/nodebb-plugin-hides.git
     
     
